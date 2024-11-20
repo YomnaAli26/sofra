@@ -3,9 +3,10 @@
 namespace App\Repositories\Interfaces;
 interface BaseInterface
 {
+
     public function all();
     public function paginate($perPage);
-    public function filter($data,$relations);
+    public function filter($data);
     public function create(array $data);
 
     public function update(array $data, $id);
@@ -13,6 +14,8 @@ interface BaseInterface
 
     public function delete($id);
     public function find($id);
-    public function with($relations);
+    public function findBy($key,$value);
+    public function getBy($key,$value);
+
 
 }

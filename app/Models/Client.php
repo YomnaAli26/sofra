@@ -2,12 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{HasMany,BelongsTo};
+use Laravel\Sanctum\HasApiTokens;
 
 class Client extends Model
 {
-
+    use HasFactory,HasApiTokens;
+    protected $casts =[
+      'password'=>'hashed'
+    ];
+    protected $hidden = [
+        'password',
+    ];
     protected $fillable = [
         'email', 'phone', 'password',
         'name', 'area_id'
@@ -27,6 +35,18 @@ class Client extends Model
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function generateCode(): void
+    {
+        $this->code = rand(0000, 9999);
+        $this->save();
+    }
+
+    public function resetCode(): void
+    {
+        $this->code = null;
+        $this->save();
     }
 
 }

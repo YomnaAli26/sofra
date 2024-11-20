@@ -2,17 +2,19 @@
 
 namespace App\Repositories\Eloquent;
 
+use App\Models\Area;
 use App\Repositories\Interfaces\CommissionRepositoryInterface;
 
 class BaseRepository
 {
+    public $relations = [];
     public function __construct(protected $model)
     {
     }
 
     public function all()
     {
-        return $this->model->latest('id')->get();
+        return $this->model->with($this->relations)->latest()->get();
     }
 
     public function paginate($perPage = 10)
@@ -20,9 +22,9 @@ class BaseRepository
         return $this->model->latest()->paginate($perPage);
     }
 
-    public function filter($data,$relations=[])
+    public function filter($data)
     {
-        return $this->model->with($relations)->filter($data);
+        return $this->model->with($this->relations)->filter($data);
     }
 
     public function create(array $data)
@@ -33,7 +35,7 @@ class BaseRepository
 
     public function find($id)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->with($this->relations)->findOrFail($id);
     }
 
     public function update(array $data, $id)
@@ -52,8 +54,14 @@ class BaseRepository
 
     }
 
-    public function with($relations)
+    public function getBy($key,$value)
     {
-        return $this->model->with($relations)->get();
+        return $this->model->with($this->relations)->where($key,$value)->get();
+    }
+
+    public function findBy($key,$value)
+    {
+        return $this->model->with($this->relations)->where($key,$value)->first();
+
     }
 }

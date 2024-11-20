@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreContactRequest;
+use App\Http\Requests\Client\StoreContactRequest;
+use App\Http\Resources\AreaResource;
 use App\Http\Resources\CityResource;
-use App\Services\{ContactService, SettingService, CityService};
+use App\Rules\CityHasAreas;
+use App\Services\{AreaService, CityService, ContactService, SettingService};
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class MainController extends Controller
@@ -13,7 +16,8 @@ class MainController extends Controller
     public function __construct(
         public CityService                $cityService,
         public SettingService $settingService,
-        public ContactService $contactService
+        public ContactService $contactService,
+        public AreaService $areaService,
     )
     {
     }
@@ -22,6 +26,12 @@ class MainController extends Controller
     {
         $cities = $this->cityService->getAllCities();
         return response()->apiResponse(200, data: CityResource::collection($cities));
+    }
+    public function areas(Request $request)
+    {
+        $validated = $request->validate(['city_id' => ['required','integer','exists:cities,id',new CityHasAreas()]]);
+        $areas = $this->areaService->getAreasByCity($validated["city_id"]);
+        return response()->apiResponse(200, data: AreaResource::collection($areas));
     }
 
     public function settings()

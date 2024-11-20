@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Interfaces\CityRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 class CityService
 {
@@ -13,8 +14,8 @@ class CityService
     {
 
     }
-    public function getAllCities()
+    public function getAllCities(): Collection
     {
-        return $this->cityRepository->all();
+        return $this->cityRepository->getCitiesHavingAreas();
     }
 }

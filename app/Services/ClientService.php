@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Services;
+
+use App\Mail\ForgotPassword;
+use App\Repositories\Interfaces\ClientRepositoryInterface;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
+
+class ClientService
+{
+    /**
+     * Create a new class instance.
+     */
+    public function __construct(public ClientRepositoryInterface $clientRepository)
+    {
+
+    }
+    public function register($data)
+    {
+       return $this->clientRepository->create($data);
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function login($data)
+    {
+        $client = $this->clientRepository->findBy("email", $data["email"]);
+       if (!Hash::check($data['password'],$client->password)) {
+           throw ValidationException::withMessages([
+              'email' =>  __('auth.failed'),
+           ]);
+       }
+        return $client;
+    }
+
+    public function forgotPassword($email)
+    {
+        $client = $this->clientRepository->findBy("email", $email);
+        $client->generateCode();
+        Mail::to($client->email)-> send(new ForgotPassword($client));
+        return $client;
+    }
+    public function resetPassword($data)
+    {
+        $client = $this->clientRepository->findBy("email", $data['email']);
+        if ($data["code"] != $client->code)
+        {
+            throw ValidationException::withMessages([
+                'code' =>  __('auth.failed'),
+            ]);
+
+        }
+        $client->resetCode();
+        $client->update(["password" => $data['password']]);
+        return $client;
+    }
+}

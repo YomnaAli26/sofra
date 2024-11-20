@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Area;
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Setting;
 use App\Models\User;
@@ -15,7 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        City::factory(10)->create();
-        $this->call(SettingSeeder::class);
+//        City::factory(10)->create();
+//        Area::factory(10)->create();
+        Category::factory(10)->create();
+//        $this->call(SettingSeeder::class);
     }
 }
