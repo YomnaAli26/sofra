@@ -4,19 +4,34 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Restaurant extends Model
+class Restaurant extends Model implements HasMedia
 {
-    use HasFactory,HasApiTokens;
+    use HasFactory, HasApiTokens, InteractsWithMedia;
+    protected $casts =[
+        'password'=>'hashed'
+    ];
+    protected $hidden = [
+        'password',
+    ];
 
     protected $fillable = [
-        'name', 'email', 'phone', 'logo',
-        'area_id', 'min_order', 'delivery_fee',
-        'status', 'avg_rate', 'contact_phone',
-        'whatsapp_number'
+        'name', 'email', 'phone','password',
+        'area_id', 'category_id', 'min_order',
+        'delivery_fee', 'status', 'avg_rate',
+        'contact_phone', 'whatsapp_number'
     ];
+
+    public function area(): BelongsTo
+    {
+        return $this->belongsTo(Area::class);
+    }
 
     public function meals(): HasMany
     {
@@ -33,9 +48,9 @@ class Restaurant extends Model
         return $this->hasMany(Offer::class);
     }
 
-    public function categories(): HasMany
+    public function category(): BelongsTo
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function commissions(): HasMany

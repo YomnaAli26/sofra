@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Mail\ForgotPassword;
 use App\Repositories\Interfaces\RestaurantRepositoryInterface;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
@@ -19,8 +20,12 @@ class RestaurantService
     }
     public function register($data)
     {
-        dd($data);
-       return $this->restaurantRepository->create($data);
+        $registeredRestaurant = $this->restaurantRepository->create(Arr::except($data,['image']));
+        if (isset($data['image']))
+        {
+            $registeredRestaurant->addMedia($data['image'])->toMediaCollection('restaurant');
+        }
+       return $registeredRestaurant;
     }
 
     /**

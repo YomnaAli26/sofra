@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Api\Restaurant\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Http\Resources\ClientResource;
-use App\Services\ClientService;
+use App\Http\Requests\Restaurant\LoginRequest;
+use App\Http\Resources\RestaurantResource;
+use App\Services\RestaurantService;
 
 class LoginController extends Controller
 {
-    public function __construct(public ClientService $clientService)
+    public function __construct(public RestaurantService $restaurantService)
     {
     }
     public function __invoke(LoginRequest $request)
     {
-        $authenticatedClient = $this->clientService->login($request->validated());
-        $authenticatedClient->token = $authenticatedClient->createToken($authenticatedClient["email"])->plainTextToken;
-        return response()->apiResponse(200, data: ClientResource::make($authenticatedClient));
+        $authenticatedRestaurant = $this->restaurantService->login($request->validated());
+        $authenticatedRestaurant->token = $authenticatedRestaurant->createToken($authenticatedRestaurant["email"])->plainTextToken;
+        return response()->apiResponse(200, data: RestaurantResource::make($authenticatedRestaurant));
 
     }
 }

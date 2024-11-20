@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Client\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\Client\LoginRequest;
 use App\Http\Resources\ClientResource;
 use App\Services\ClientService;
 

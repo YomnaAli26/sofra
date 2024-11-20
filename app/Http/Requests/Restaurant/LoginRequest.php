@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Restaurant;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'max:255', 'exists:clients,email'],
+            'email' => ['required', 'string', 'email', 'max:255', 'exists:restaurants,email'],
             'password' => ['required', 'string', 'min:8'],
 
         ];
