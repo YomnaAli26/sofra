@@ -19,8 +19,9 @@ Route::group(['middleware' => 'auth:restaurant'], function () {
     Route::post('logout',LogoutController::class);
     Route::get('profile',[ProfileController::class,'show']);
     Route::put('profile',[ProfileController::class,'update']);
-    Route::apiResource('meals',MealController::class);
-    Route::apiResource('offers',OfferController::class);
-
+    Route::apiResources([
+        'meals'=> MealController::class,
+        'offers'=> OfferController::class,
+        ]);
 });
 

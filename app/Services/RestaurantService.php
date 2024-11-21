@@ -74,4 +74,21 @@ class RestaurantService
         return $this->restaurantRepository->find($id);
 
     }
+
+    public function showRestaurant($id)
+    {
+       return $this->restaurantRepository->find($id);
+    }
+    public function getRestaurants($perPage = 10)
+    {
+       return $this->restaurantRepository->paginate($perPage);
+    }
+    public function getMealsRestaurant($id)
+    {
+        $this->restaurantRepository->relations = ['meals.restaurant'];
+        $restaurant =$this->restaurantRepository->find($id);
+       return $restaurant->meals;
+    }
+
+
 }

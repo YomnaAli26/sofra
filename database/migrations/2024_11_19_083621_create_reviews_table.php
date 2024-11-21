@@ -12,7 +12,6 @@ return new class extends Migration {
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('comment', 255);
             $table->string('review');
             $table->integer('rate');
             $table->foreignId('client_id')->constrained()->cascadeOnDelete();
