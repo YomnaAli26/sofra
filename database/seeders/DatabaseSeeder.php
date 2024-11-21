@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Area;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Meal;
 use App\Models\Setting;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,5 +22,7 @@ class DatabaseSeeder extends Seeder
         Area::factory(10)->create();
         Category::factory(10)->create();
         $this->call(SettingSeeder::class);
+        Meal::factory(10)->create();
+
     }
 }

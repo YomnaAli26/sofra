@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Client\ProfileController;
 use App\Http\Controllers\Api\Client\Auth\{ForgotPasswordController,
     LoginController,
     RegisterController,
@@ -17,6 +18,8 @@ Route::patch('reset-password',ResetPasswordController::class);
 
 Route::group(['middleware' => 'auth:client'], function () {
     Route::post('logout',LogoutController::class);
+    Route::get('profile',[ProfileController::class,'show']);
+    Route::put('profile',[ProfileController::class,'update']);
 
 });
 

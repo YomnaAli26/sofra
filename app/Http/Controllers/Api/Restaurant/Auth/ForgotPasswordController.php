@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api\Restaurant\Auth;
 
 use App\Http\Controllers\Controller;
 
-use App\Services\ClientService;
+use App\Services\RestaurantService;
 use Illuminate\Http\Request;
 
 
 
 class ForgotPasswordController extends Controller
 {
-    public function __construct(public ClientService $clientService)
+    public function __construct(public RestaurantService $restaurantService)
     {
     }
 
@@ -20,8 +20,8 @@ class ForgotPasswordController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $request->validate(['email' => ['required','exists:clients,email'],]);
-        $this->clientService->forgotPassword($request->email);
+        $request->validate(['email' => ['required','exists:restaurants,email'],]);
+        $this->restaurantService->forgotPassword($request->email);
         return response()->apiResponse(message: "we send otp code on your email check it");
 
     }

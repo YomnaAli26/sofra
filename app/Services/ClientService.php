@@ -57,4 +57,15 @@ class ClientService
         $client->update(["password" => $data['password']]);
         return $client;
     }
+
+    public function updateProfileData($data,$id)
+    {
+        return $this->clientRepository->update($data,$id);
+
+    }
+    public function showProfileData($id)
+    {
+        return $this->clientRepository->find($id);
+
+    }
 }

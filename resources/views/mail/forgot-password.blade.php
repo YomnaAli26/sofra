@@ -1,7 +1,7 @@
 <x-mail::message>
     # Introduction
-    Welcome {{$client->name}}
-    your Code is {{$client->code}}.
+    Welcome {{$user->name}}
+    your Code is {{$user->code}}.
 
     Thanks,<br>
     {{ config('app.name') }}

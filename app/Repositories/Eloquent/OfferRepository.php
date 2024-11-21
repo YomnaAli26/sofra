@@ -2,9 +2,8 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Models\DonationRequest;
+
 use App\Models\Offer;
-use App\Repositories\Interfaces\MealRepositoryInterface;
 use App\Repositories\Interfaces\OfferRepositoryInterface;
 
 class OfferRepository extends BaseRepository implements OfferRepositoryInterface

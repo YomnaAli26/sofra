@@ -11,7 +11,7 @@ class LogoutController extends Controller
 
     public function __invoke(Request $request)
     {
-        $request->user('client')->currentAccessToken()->delete();
+        $request->user('restaurant')->currentAccessToken()->delete();
         return response()->apiResponse(message: "Logged out successfully");
     }
 }

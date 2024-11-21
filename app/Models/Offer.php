@@ -2,13 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Offer extends Model
+class Offer extends Model implements HasMedia
 {
+    use HasFactory, InteractsWithMedia;
+
     protected $fillable =[
-        'name', 'description', 'logo',
+        'name', 'description',
         'from', 'to', 'restaurant_id'
     ];
 
@@ -16,5 +21,8 @@ class Offer extends Model
     {
         return $this->belongsTo(Restaurant::class);
     }
-
+    public function getImagePathAttribute(): string
+    {
+        return $this->getFirstMediaUrl('offers');
+    }
 }

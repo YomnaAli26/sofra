@@ -44,23 +44,34 @@ class RestaurantService
 
     public function forgotPassword($email)
     {
-        $client = $this->restaurantRepository->findBy("email", $email);
-        $client->generateCode();
-        Mail::to($client->email)-> send(new ForgotPassword($client));
-        return $client;
+        $restaurant = $this->restaurantRepository->findBy("email", $email);
+        $restaurant->generateCode();
+        Mail::to($restaurant->email)-> send(new ForgotPassword($restaurant));
+        return $restaurant;
     }
     public function resetPassword($data)
     {
-        $client = $this->restaurantRepository->findBy("email", $data['email']);
-        if ($data["code"] != $client->code)
+        $restaurant = $this->restaurantRepository->findBy("email", $data['email']);
+        if ($data["code"] != $restaurant->code)
         {
             throw ValidationException::withMessages([
                 'code' =>  __('auth.failed'),
             ]);
 
         }
-        $client->resetCode();
-        $client->update(["password" => $data['password']]);
-        return $client;
+        $restaurant->resetCode();
+        $restaurant->update(["password" => $data['password']]);
+        return $restaurant;
+    }
+
+    public function updateProfileData($data,$id)
+    {
+        return $this->restaurantRepository->update($data,$id);
+
+    }
+    public function showProfileData($id)
+    {
+        return $this->restaurantRepository->find($id);
+
     }
 }

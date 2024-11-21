@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->longText('description');
-            $table->string('logo');
             $table->date('from');
             $table->date('to');
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();

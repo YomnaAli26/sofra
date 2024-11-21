@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->text('description');
             $table->decimal('price');
             $table->decimal('offer_price');
-            $table->string('image');
+            $table->time('preparation_time');
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

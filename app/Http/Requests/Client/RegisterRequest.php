@@ -23,8 +23,8 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:clients'],
-            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:clients'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:clients,email'],
+            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:clients,phone'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'area_id' => ['required', 'exists:areas,id'],
         ];

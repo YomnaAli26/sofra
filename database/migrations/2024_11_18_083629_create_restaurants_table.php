@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->decimal('min_order');
             $table->decimal('delivery_fee');
-            $table->string('status')->default('open');
+            $table->string('status')->default('closed');
             $table->integer('avg_rate')->default(1);
             $table->string('contact_phone');
             $table->string('whatsapp_number');

@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{BelongsTo,BelongsToMany};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Meal extends Model
+class Meal extends Model implements HasMedia
 {
+    use HasFactory,interactsWithMedia;
 
     protected $fillable = [
         'name', 'description', 'price',
@@ -22,6 +26,10 @@ class Meal extends Model
     public function orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class);
+    }
+    public function getImagePathAttribute(): string
+    {
+        return $this->getFirstMediaUrl('meals');
     }
 
 }

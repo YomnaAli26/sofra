@@ -75,4 +75,9 @@ class Restaurant extends Model implements HasMedia
         $this->save();
     }
 
+    public function getImagePathAttribute(): string
+    {
+        return $this->getFirstMediaUrl('restaurant') ?: asset('images/default.png');
+    }
+
 }

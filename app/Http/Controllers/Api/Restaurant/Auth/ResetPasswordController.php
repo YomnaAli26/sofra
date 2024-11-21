@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Api\Restaurant\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Services\ClientService;
+use App\Services\RestaurantService;
 use Illuminate\Http\Request;
 
 
 class ResetPasswordController extends Controller
 {
-    public function __construct(public ClientService $clientService)
+    public function __construct(public RestaurantService $restaurantService)
     {
     }
 
@@ -19,11 +20,11 @@ class ResetPasswordController extends Controller
     public function __invoke(Request $request)
     {
         $validated = $request->validate([
-            'email' => ['required','exists:clients,email'],
-            'code' => ['required','exists:clients,code'],
+            'email' => ['required','exists:restaurants,email'],
+            'code' => ['required','exists:restaurants,code'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-        $this->clientService->resetPassword($validated);
+        $this->restaurantService->resetPassword($validated);
         return response()->apiResponse(message: "your password has been reset");
 
     }
