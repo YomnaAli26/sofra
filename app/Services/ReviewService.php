@@ -21,8 +21,8 @@ class ReviewService
     }
     public function getRestaurantReviews($id)
     {
-        $this->restaurantRepository->relations = ['reviews.restaurant','reviews.client'];
-        $restaurant =$this->restaurantRepository->find($id);
+        $restaurant =$this->restaurantRepository->withRelations(['reviews.restaurant','reviews.client'])
+            ->find($id);
         return $restaurant->reviews;
     }
     public function createReview($data)

@@ -14,9 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('meal_id')->constrained()->cascadeOnDelete();
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
+            $table->decimal('price');
             $table->integer('quantity');
             $table->string('special_request')->nullable();
-            $table->decimal('total_amount');
             $table->timestamps();
         });
 

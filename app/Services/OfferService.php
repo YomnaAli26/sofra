@@ -19,8 +19,8 @@ class OfferService
 
     public function getRestaurantOffers()
     {
-        $this->offerRepository->relations = 'restaurant';
-        return $this->offerRepository->getBy('restaurant_id',auth('restaurant')->user()->id);
+        return $this->offerRepository->withRelations(['restaurant'])
+            ->getBy(['restaurant_id'=>auth('restaurant')->user()->id]);
     }
 
     public function createOffer($data)

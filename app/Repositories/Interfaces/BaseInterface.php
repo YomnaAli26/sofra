@@ -15,7 +15,7 @@ interface BaseInterface
     public function delete($id);
     public function find($id);
     public function findBy($key,$value);
-    public function getBy($key,$value);
+    public function getBy(array $conditions);
 
 
 }

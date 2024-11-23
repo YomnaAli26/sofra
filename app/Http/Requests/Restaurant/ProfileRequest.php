@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Restaurant;
 
-use App\Enums\RestaurantStatus;
+use App\Enums\RestaurantStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -35,7 +35,7 @@ class ProfileRequest extends FormRequest
             'delivery_fee' => ['sometimes', 'integer', 'min:1'],
             'contact_phone' => ['sometimes', 'string', 'min:11', 'max:11', Rule::unique('restaurants','contact_phone')->ignore(auth('restaurant')->user()->id)],
             'whatsapp_number' => ['sometimes', 'string', 'min:11', 'max:11', Rule::unique('restaurants','whatsapp_number')->ignore(auth('restaurant')->user()->id)],
-            'status'=>['sometimes','string','in:'.implode(',',array_map(fn($case)=> $case->value, RestaurantStatus::cases()))],
+            'status'=>['sometimes','string','in:'.implode(',',array_map(fn($case)=> $case->value, RestaurantStatusEnum::cases()))],
 
         ];
     }

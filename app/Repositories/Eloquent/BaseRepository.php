@@ -2,14 +2,22 @@
 
 namespace App\Repositories\Eloquent;
 
-use App\Models\Area;
-use App\Repositories\Interfaces\CommissionRepositoryInterface;
+
 
 class BaseRepository
 {
-    public $relations = [];
+    protected array $relations = [];
     public function __construct(protected $model)
     {
+    }
+    public function query(): \Illuminate\Database\Eloquent\Builder
+    {
+        return $this->model->with($this->relations);
+    }
+    public function withRelations($relations): static
+    {
+        $this->relations = $relations;
+        return $this;
     }
 
     public function all()
@@ -19,13 +27,17 @@ class BaseRepository
 
     public function paginate($perPage = 10)
     {
-        return $this->model->latest()->paginate($perPage);
+        return $this->model->with($this->relations)->latest()->paginate($perPage);
     }
 
     public function filter($data)
     {
-        return $this->model->with($this->relations)->filter($data);
+        if (!method_exists($this->model,'scopeFilter')) {
+            return $this->model->with($this->relations)->filter($data);
+        }
+        throw new \BadMethodCallException('Filter method not defined in ' . get_class($this->model));
     }
+
 
     public function create(array $data)
     {
@@ -54,9 +66,9 @@ class BaseRepository
 
     }
 
-    public function getBy($key,$value)
+    public function getBy(array $conditions)
     {
-        return $this->model->with($this->relations)->where($key,$value)->get();
+        return $this->model->with($this->relations)->where($conditions)->get();
     }
 
     public function findBy($key,$value)

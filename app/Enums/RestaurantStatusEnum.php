@@ -2,9 +2,9 @@
 
 namespace App\Enums;
 
-enum RestaurantStatus: string
+enum RestaurantStatusEnum: string
 {
-    case OPENED = 'opened';
+    case OPEN = 'open';
     case CLOSED = 'closed';
 }
 

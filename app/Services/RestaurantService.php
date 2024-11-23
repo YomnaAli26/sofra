@@ -83,10 +83,10 @@ class RestaurantService
     {
        return $this->restaurantRepository->paginate($perPage);
     }
-    public function getMealsRestaurant($id)
+    public function getRestaurantMeals($id)
     {
-        $this->restaurantRepository->relations = ['meals.restaurant'];
-        $restaurant =$this->restaurantRepository->find($id);
+        $restaurant =$this->restaurantRepository->withRelations(['meals.restaurant'])
+            ->find($id);
        return $restaurant->meals;
     }
 

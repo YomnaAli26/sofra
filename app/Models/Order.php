@@ -2,21 +2,41 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatusEnum;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{BelongsTo,HasMany};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Order extends Model
 {
-
     protected $fillable = [
         'address', 'payment_method', 'status',
         'notes', 'commission', 'delivery_fee',
-        'total_amount', 'client_id', 'restaurant_id'
+        'price', 'total_amount','net',
+        'client_id', 'restaurant_id'
+    ];
+    protected $casts =[
+        'status'=> OrderStatusEnum::class,
     ];
 
-    public function meals(): HasMany
+    protected static function boot()
     {
-        return $this->hasMany(Meal::class);
+        static::creating(function ($model) {
+            $model->number = static::generateOrderNumber();
+
+        });
+        parent::boot();
+    }
+    public static function generateOrderNumber(): string
+    {
+        return 'ORD-' . date('YmdHis');
+    }
+
+
+    public function meals(): BelongsToMany
+    {
+        return $this->belongsToMany(Meal::class)
+            ->withPivot('price','quantity','special_request')
+            ->withTimestamps();
     }
 
 

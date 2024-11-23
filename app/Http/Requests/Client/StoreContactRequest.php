@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Client;
 
-use App\Enums\ContactStatus;
+use App\Enums\ContactStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreContactRequest extends FormRequest
@@ -27,7 +27,7 @@ class StoreContactRequest extends FormRequest
             'email'=>['required','string','email','max:255'],
             'phone'=>['required','string','max:255'],
             'message'=>['required','string','max:255'],
-            'status'=>['required','string','in:'.implode(',',array_map(fn($case)=> $case->value, ContactStatus::cases()))],
+            'status'=>['required','string','in:'.implode(',',array_map(fn($case)=> $case->value, ContactStatusEnum::cases()))],
         ];
     }
 }

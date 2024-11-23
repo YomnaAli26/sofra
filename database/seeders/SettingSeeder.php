@@ -21,6 +21,9 @@ class SettingSeeder extends Seeder
             [
                 'key' => 'commission_details',
                 'value' => json_encode(['en' => 'Commission is applied on all sales.', 'ar' => 'يتم تطبيق العمولة على جميع المبيعات.'])
+            ],[
+                'key' => 'commission_value',
+                'value' => json_encode(['en' => .1, 'ar' => .1])
             ],
             [
                 'key' => 'alahly_account_number',

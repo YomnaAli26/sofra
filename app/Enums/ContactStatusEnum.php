@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ContactStatus: string
+enum ContactStatusEnum: string
 {
     case COMPLAINT  = 'complaint';
     case SUGGESTION  = 'suggestion';

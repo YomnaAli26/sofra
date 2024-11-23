@@ -15,12 +15,13 @@ return new class extends Migration {
             $table->string('number');
             $table->string('address');
             $table->string('payment_method');
-            $table->string('status');
+            $table->string('status')->default('pending');
             $table->text('notes');
             $table->decimal('commission');
             $table->decimal('price');
             $table->decimal('delivery_fee');
             $table->decimal('total_amount');
+            $table->decimal('net');
             $table->foreignId('client_id')->constrained()->cascadeOnDelete();
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
             $table->timestamps();

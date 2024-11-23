@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RestaurantStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,7 +16,8 @@ class Restaurant extends Model implements HasMedia
 {
     use HasFactory, HasApiTokens, InteractsWithMedia;
     protected $casts =[
-        'password'=>'hashed'
+        'password'=>'hashed',
+        'status'=> RestaurantStatusEnum::class,
     ];
     protected $hidden = [
         'password',

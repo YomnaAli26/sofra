@@ -16,7 +16,6 @@ class AreaService
     }
     public function getAreasByCity(int $cityId)
     {
-        $this->areaRepository->relations = 'city';
-        return $this->areaRepository->getBy('city_id',$cityId);
+        return $this->areaRepository->withRelations(['city'])->getBy(['city_id'=>$cityId]);
     }
 }

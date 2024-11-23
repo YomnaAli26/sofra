@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\Client\GeneralController;
+use App\Http\Controllers\Api\Client\OrderController;
+use App\Http\Controllers\Api\Client\RestaurantController;
 use App\Http\Controllers\Api\Client\ProfileController;
+use App\Http\Controllers\Api\Client\RestaurantMealController;
 use App\Http\Controllers\Api\Client\ReviewController;
 use App\Http\Controllers\Api\Client\Auth\{ForgotPasswordController,
     LoginController,
@@ -22,10 +24,10 @@ Route::group(['middleware' => 'auth:client'], function () {
     Route::post('logout',LogoutController::class);
     Route::get('profile',[ProfileController::class,'show']);
     Route::put('profile',[ProfileController::class,'update']);
-    Route::get('restaurants',[GeneralController::class,'getRestaurants']);
-    Route::get('restaurants/{id}',[GeneralController::class,'showRestaurant']);
-    Route::get('restaurant-meals',[GeneralController::class,'getMealsRestaurant']);
+    Route::apiResource('restaurants',RestaurantController::class)->only(['index','show']);
+    Route::apiResource('restaurant-meals',RestaurantMealController::class)->only(['index','show']);
     Route::apiResource('restaurant-reviews',ReviewController::class)->only(['index','store']);
-
+    Route::post('orders',[OrderController::class,'store']);
+    Route::get('current-orders',[OrderController::class,'currentOrders']);
 });
 

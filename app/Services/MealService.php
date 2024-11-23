@@ -18,8 +18,7 @@ class MealService
 
     public function getRestaurantMeals()
     {
-        $this->mealRepository->relations = 'restaurant';
-        return $this->mealRepository->getBy('restaurant_id',auth('restaurant')->user()->id);
+        return $this->mealRepository->withRelations(['restaurant'])->getBy(['restaurant_id'=>auth('restaurant')->user()->id]);
     }
 
     public function createMeal($data)
