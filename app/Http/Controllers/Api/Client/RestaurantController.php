@@ -17,6 +17,7 @@ class RestaurantController extends Controller
 
     public function index()
     {
+
         $restaurants = $this->restaurantService->getRestaurants();
         return response()->apiResponse(data:RestaurantResource::collection($restaurants));
     }

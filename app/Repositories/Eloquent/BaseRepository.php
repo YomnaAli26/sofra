@@ -4,6 +4,9 @@ namespace App\Repositories\Eloquent;
 
 
 
+
+use Illuminate\Http\Request;
+
 class BaseRepository
 {
     protected array $relations = [];
@@ -30,10 +33,10 @@ class BaseRepository
         return $this->model->with($this->relations)->latest()->paginate($perPage);
     }
 
-    public function filter($data)
+    public function filter()
     {
-        if (!method_exists($this->model,'scopeFilter')) {
-            return $this->model->with($this->relations)->filter($data);
+        if (!method_exists($this->model,'filter')) {
+            return $this->model->with($this->relations)->filter();
         }
         throw new \BadMethodCallException('Filter method not defined in ' . get_class($this->model));
     }

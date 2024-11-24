@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\RestaurantStatusEnum;
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +15,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Restaurant extends Model implements HasMedia
 {
-    use HasFactory, HasApiTokens, InteractsWithMedia;
+    use HasFactory, HasApiTokens, InteractsWithMedia, Filterable;
     protected $casts =[
         'password'=>'hashed',
         'status'=> RestaurantStatusEnum::class,
@@ -29,6 +30,13 @@ class Restaurant extends Model implements HasMedia
         'delivery_fee', 'status', 'avg_rate',
         'contact_phone', 'whatsapp_number'
     ];
+    public array $filterRelations =
+        [
+            'area',
+            'meals',
+            'offers',
+            'reviews',
+        ];
 
     public function area(): BelongsTo
     {

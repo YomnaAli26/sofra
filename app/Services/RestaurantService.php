@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Mail\ForgotPassword;
+
 use App\Repositories\Interfaces\RestaurantRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -81,7 +83,8 @@ class RestaurantService
     }
     public function getRestaurants($perPage = 10)
     {
-       return $this->restaurantRepository->paginate($perPage);
+
+       return $this->restaurantRepository->withRelations(['area.city','category'])->filter()->paginate($perPage);
     }
     public function getRestaurantMeals($id)
     {
