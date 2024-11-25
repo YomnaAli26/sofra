@@ -5,9 +5,10 @@ namespace App\Repositories\Eloquent;
 
 
 
+use App\Repositories\Interfaces\BaseInterface;
 use Illuminate\Http\Request;
 
-class BaseRepository
+class BaseRepository implements BaseInterface
 {
     protected array $relations = [];
     public function __construct(protected $model)
@@ -50,7 +51,7 @@ class BaseRepository
 
     public function find($id)
     {
-        return $this->model->with($this->relations)->findOrFail($id);
+        return $this->model->with($this->relations)->find($id);
     }
 
     public function update(array $data, $id)
@@ -74,9 +75,13 @@ class BaseRepository
         return $this->model->with($this->relations)->where($conditions)->get();
     }
 
-    public function findBy($key,$value)
+    public function findBy(array $conditions)
     {
-        return $this->model->with($this->relations)->where($key,$value)->first();
+        return $this->model->with($this->relations)->where($conditions)->first();
 
+    }
+    public function whereIn(string $column, array $values)
+    {
+        return $this->model->with($this->relations)->whereIn($column, $values)->get();
     }
 }

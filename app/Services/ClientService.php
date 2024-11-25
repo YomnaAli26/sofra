@@ -27,7 +27,7 @@ class ClientService
      */
     public function login($data)
     {
-        $client = $this->clientRepository->findBy("email", $data["email"]);
+        $client = $this->clientRepository->findBy(["email" => $data["email"]]);
        if (!Hash::check($data['password'],$client->password)) {
            throw ValidationException::withMessages([
               'email' =>  __('auth.failed'),
@@ -38,14 +38,14 @@ class ClientService
 
     public function forgotPassword($email)
     {
-        $client = $this->clientRepository->findBy("email", $email);
+        $client = $this->clientRepository->findBy(["email" => $email]);
         $client->generateCode();
         Mail::to($client->email)-> send(new ForgotPassword($client));
         return $client;
     }
     public function resetPassword($data)
     {
-        $client = $this->clientRepository->findBy("email", $data['email']);
+        $client = $this->clientRepository->findBy(["email" => $data['email']]);
         if ($data["code"] != $client->code)
         {
             throw ValidationException::withMessages([

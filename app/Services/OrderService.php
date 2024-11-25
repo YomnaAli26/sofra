@@ -17,18 +17,52 @@ class OrderService
     {
     }
 
-    public function processOrder($data)
+    public function showOrder($id): array
     {
-         $order = $this->orderRepository->createOrder($data);
-         OrderCreatedEvent::dispatch($order);
-         return $order;
+        $order = $this->orderRepository->withRelations(['meals.restaurant'])->findBy([
+            'id' => $id,
+            'client_id' => auth('client')->user()->id,
+        ]);
+
+       return $order ?? [
+           'code' => 404,
+           'status' => false,
+           'message'=>'invalid order id'
+
+       ];
+    }
+
+    public function updateOrderStatus($data,$id)
+    {
+        $order = $this->orderRepository->withRelations(['meals.restaurant'])->findBy([
+            'id' => $id,
+            'client_id' => auth('client')->user()->id,
+        ]);
+        $order->update([
+            'status' => OrderStatusEnum::from($data['action']),
+        ]);
+        return $order->refresh()->load('meals.restaurant');
+
+    }
+
+    public function processOrder($data): array
+    {
+         return $this->orderRepository->createOrder($data);
     }
 
     public function getCurrentOrders()
     {
         return $this->orderRepository->withRelations(['meals.restaurant'])->getBy([
-            'status'=>OrderStatusEnum::ACCEPTED,
-            'client_id'=>auth('client')->user()->id,
+            'status' => OrderStatusEnum::ACCEPTED,
+            'client_id'=> auth('client')->user()->id,
+            ]);
+    }
+    public function getPreviousOrders()
+    {
+
+        return $this->orderRepository->withRelations(['meals.restaurant'])->whereIn( 'status' ,[
+            OrderStatusEnum::COMPLETED,
+            OrderStatusEnum::CANCELED,
             ]);
     }
 

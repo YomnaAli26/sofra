@@ -23,13 +23,15 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
         DB::beginTransaction();
         try {
+
+            $restaurant = Restaurant::where('id', $data['restaurant_id'])->first();
             $orderPrice = collect($data['meals'])->map(function ($meal) {
                 $mealModel = Meal::query()->find($meal['meal_id']);
                 return $mealModel->price * $meal['quantity'];
             })->sum();
             $commission = Setting::where('key', 'commission_value')->first()->value;
             $commission = $orderPrice * $commission;
-            $deliveryFee = Restaurant::where('id', $data['restaurant_id'])->value('delivery_fee');
+            $deliveryFee = $restaurant->value('delivery_fee');
             $total = $orderPrice + $deliveryFee;
 
             $orderData = Arr::except($data, 'meals');
@@ -39,6 +41,13 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             $orderData['total_amount'] = $total;
             $orderData['net'] = $total - $commission;
 
+            if ($total < $restaurant->value('min_order')) {
+                return [
+                    'code'=> 422,
+                    'status' => false,
+                    'message'=>   'The total price of the order must be greater than ' . $restaurant->min_order,
+                ];
+            }
 
             $order = $this->order->create($orderData);
             $order->meals()->attach(
@@ -53,11 +62,21 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                 })->toArray()
             );
             DB::commit();
-            return $order->fresh(['meals.restaurant','restaurant']);
+            return [
+                'status' => true,
+                'data'=> $order->fresh(['meals.restaurant','restaurant']),
+            ];
+
 
         } catch (\Throwable $exception) {
+
             DB::rollBack();
-            return $exception->getMessage();
+            return [
+                'code'=> 404,
+                'status' => false,
+                'message'=>   $exception->getMessage(),
+            ];
+
         }
     }
 }

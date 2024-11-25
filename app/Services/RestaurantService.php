@@ -35,7 +35,7 @@ class RestaurantService
      */
     public function login($data)
     {
-        $client = $this->restaurantRepository->findBy("email", $data["email"]);
+        $client = $this->restaurantRepository->findBy(["email" => $data["email"]]);
        if (!Hash::check($data['password'],$client->password)) {
            throw ValidationException::withMessages([
               'email' =>  __('auth.failed'),
@@ -46,14 +46,14 @@ class RestaurantService
 
     public function forgotPassword($email)
     {
-        $restaurant = $this->restaurantRepository->findBy("email", $email);
+        $restaurant = $this->restaurantRepository->findBy(["email" => $email]);
         $restaurant->generateCode();
         Mail::to($restaurant->email)-> send(new ForgotPassword($restaurant));
         return $restaurant;
     }
     public function resetPassword($data)
     {
-        $restaurant = $this->restaurantRepository->findBy("email", $data['email']);
+        $restaurant = $this->restaurantRepository->findBy(["email" => $data['email']]);
         if ($data["code"] != $restaurant->code)
         {
             throw ValidationException::withMessages([

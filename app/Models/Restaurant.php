@@ -38,7 +38,14 @@ class Restaurant extends Model implements HasMedia
             'offers',
             'reviews',
         ];
-
+    private function getDeviceTokens()
+    {
+        return $this->tokens()->fcm_token;
+    }
+    public function routeNotificationForFcm(): array
+    {
+        return $this->getDeviceTokens();
+    }
     public function area(): BelongsTo
     {
         return $this->belongsTo(Area::class);
@@ -90,5 +97,7 @@ class Restaurant extends Model implements HasMedia
     {
         return $this->getFirstMediaUrl('restaurant') ?: asset('images/default.png');
     }
+
+
 
 }

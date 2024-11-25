@@ -10,6 +10,7 @@ use App\Rules\CityHasAreas;
 use App\Services\{AreaService, CityService, ContactService, SettingService};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class MainController extends Controller
 {
@@ -48,5 +49,22 @@ class MainController extends Controller
     {
         $contact = $this->contactService->create($request->validated());
         return response()->apiResponse(200, "Message Sent Successfully",data: $contact);
+    }
+
+    public function registerFcmToken(Request $request)
+    {
+        $validatedData = $request->validate(['fcm_token' => ['required']]);
+        PersonalAccessToken::where('fcm_token', $validatedData['fcm_token'])->delete();
+        $request->user()->tokens()->update($validatedData);
+        return response()->apiResponse(200, "Token registered successfully");
+
+    }
+
+    public function deleteFcmToken(Request $request)
+    {
+        $validatedData = $request->validate(['fcm_token' => ['required']]);
+        PersonalAccessToken::where('fcm_token', $validatedData['fcm_token'])->delete();
+        return response()->apiResponse(200, "Token deleted successfully");
+
     }
 }
