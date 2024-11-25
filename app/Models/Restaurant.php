@@ -9,13 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Restaurant extends Model implements HasMedia
 {
-    use HasFactory, HasApiTokens, InteractsWithMedia, Filterable;
+    use HasFactory, HasApiTokens, InteractsWithMedia, Filterable,Notifiable;
     protected $casts =[
         'password'=>'hashed',
         'status'=> RestaurantStatusEnum::class,

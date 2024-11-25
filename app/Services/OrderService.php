@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\OrderStatusEnum;
+use App\Events\OrderCreatedEvent;
 use App\Models\Order;
 use App\Repositories\Interfaces\OrderRepositoryInterface;
 
@@ -19,6 +20,7 @@ class OrderService
     public function processOrder($data)
     {
          $order = $this->orderRepository->createOrder($data);
+         OrderCreatedEvent::dispatch($order);
          return $order;
     }
 

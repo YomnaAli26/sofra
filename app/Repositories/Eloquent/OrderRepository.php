@@ -53,7 +53,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                 })->toArray()
             );
             DB::commit();
-            return $order->fresh('meals.restauran');
+            return $order->fresh(['meals.restaurant','restaurant']);
 
         } catch (\Throwable $exception) {
             DB::rollBack();

@@ -26,6 +26,7 @@ class LangMiddleware
         {
             App::setLocale(config('app.locale'));
         }
+
         return $next($request);
     }
 }

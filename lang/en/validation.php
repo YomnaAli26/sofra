@@ -161,6 +161,7 @@ return [
     'ulid' => 'The :attribute field must be a valid ULID.',
     'uuid' => 'The :attribute field must be a valid UUID.',
     'restaurant_not_available' => 'This restaurant is not available now.',
+    'meal_not_available' => 'This meal is not available.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

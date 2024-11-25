@@ -29,6 +29,13 @@ class OrderController extends Controller
         $orders = $this->orderService->getCurrentOrders();
         return response()->apiResponse(data: OrderResource::collection($orders));
 
+    }
+
+    public function receiveOrder()
+    {
+        $orders = $this->orderService->getCurrentOrders();
+        return response()->apiResponse(data: OrderResource::collection($orders));
+
 
     }
 

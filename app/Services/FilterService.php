@@ -19,97 +19,120 @@ class FilterService
     {
         return $this->query->getModel()->getFillable();
     }
-
     public function apply(): Builder
     {
         $queryParamsKeys = array_keys($this->request->query());
-        $filters = array_intersect($this->getModelColumns(), $queryParamsKeys);
-        $filterRelations = array_filter($queryParamsKeys, fn($paramKey) => str_contains($paramKey, '-'));
 
-        if (!empty($queryParamsKeys) || $filters || $filterRelations) {
-
-                foreach ($filters as $filter) {
-
-                    $value = $this->request->input($filter);
-
-                    $method = match (true) {
-                        is_string($value) => 'filterLike',
-                        is_numeric($value) || is_bool($value) => 'filterWhere',
-                        is_array($value) => 'filterIn',
-                        default => null,
-                    };
-
-                    if ($method && method_exists($this, $method)) {
-                        $this->$method($filter, $this->request->input($filter));
-                    }
-
-
-                }
-
-                $relationQueryParams = array_map(fn($paramKey) => explode("-", $paramKey)[0], $filterRelations);
-                $relationColsQueryParams = array_map(function ($paramKey) {
-                    [$relation, $col] = explode("-", $paramKey);
-                    return [$relation, $col];
-                }, $filterRelations);
-
-                $modelFilterRelations = $this->query->getModel()->filterRelations ?? [];
-
-
-                $matchingRelations = array_intersect($relationQueryParams, $modelFilterRelations);
-
-                if (empty($matchingRelations)) {
-                    throw new \InvalidArgumentException('No matching relations found for the provided parameters.');
-                }
-
-
-                foreach ($relationColsQueryParams as [$relation, $column]) {
-                    $this->applyRelationFilter($relation, $column, $this->request->input("$relation-$column"));
-                }
-
-                return $this->query;
-
-
-
-
-
+        if (empty($queryParamsKeys)) {
+            return $this->query;
         }
 
+        $filters = array_intersect($this->getModelColumns(), $queryParamsKeys);
 
+        $filterRelationsQueryParams = array_filter($queryParamsKeys, fn($key) => str_contains($key, '-'));
+        $relationFilters = array_map(fn($key) => explode('-', $key), $filterRelationsQueryParams);
+        $relationFilters = $this->validateRelationFilters($relationFilters);
 
+        $this->applyModelFilters($filters);
+
+       $this->applyRelationFilters($relationFilters);
 
         return $this->query;
     }
-
-    protected function filterWhere(string $field, $value): void
+    private function validateRelationFilters(array $relationFilters): array
     {
-        $this->query->where($field, $value);
+        $modelRelations = $this->query->getModel()->filterRelations ?? [];
+        $validRelations = [];
 
+        foreach ($relationFilters as [$relation, $column]) {
+            if (in_array($relation, $modelRelations)) {
+                $validRelations[] = compact('relation', 'column');
+            }
+        }
+
+        return $validRelations;
     }
 
-    protected function filterLike(string $field, $value): void
+    /**
+     * Apply filters for direct model columns.
+     */
+    protected function applyModelFilters(array $filters): void
     {
-        $this->query->where($field, 'LIKE', "%$value%");
+        foreach ($filters as $filter) {
 
+            $value = $this->request->input($filter);
+
+            $method = match (true) {
+                is_string($value) => 'filterLike',
+                is_numeric($value) || is_bool($value) => 'filterWhere',
+                is_array($value) => 'filterIn',
+                default => null,
+            };
+
+            if ($method && method_exists($this, $method)) {
+                $this->$method($filter, $value);
+            }
+        }
     }
 
-    protected function filterBetween(string $field, array $value): void
+    /**
+     * Apply filters for relationships.
+     */
+    protected function applyRelationFilters(array $relationFilters): void
     {
-        $this->query->whereBetween($field, $value);
+        foreach ($relationFilters as $key =>$relation) {
+            $value = $this->request->input($relation['relation']."-".$relation['column']);
+            $this->applyRelationFilter($relation['relation'], $relation['column'], $value);
+        }
     }
 
-    protected function filterIn(string $field, array $values): void
+    /**
+     * Filter the query using "LIKE" for string values.
+     */
+    protected function filterLike(string $column, mixed $value): void
     {
-        $this->query->whereIn($field, $values);
+        $this->query->where($column, 'LIKE', "%$value%");
     }
 
-    protected function applyRelationFilter($relation, string $field, $value): void
+    /**
+     * Filter the query using "WHERE" for exact matches.
+     */
+    protected function filterWhere(string $column, mixed $value): void
     {
+        $this->query->where($column, $value);
+    }
 
-        $this->query->whereHas($relation, function (Builder $query) use ($field, $value) {
-            $query->where($field, $value);
+    /**
+     * Filter the query using "WHERE IN" for array values.
+     */
+    protected function filterIn(string $column, array $value): void
+    {
+        $this->query->whereIn($column, $value);
+    }
+
+    /**
+     * Apply a filter to a related model's column.
+     */
+    protected function applyRelationFilter(string $relation, string $column, mixed $value): void
+    {
+        $this->query->whereHas($relation, function (Builder $query) use ($column, $value) {
+           if (!in_array($column, $query->getModel()->getFillable()))
+           {
+               throw new \InvalidArgumentException("Invalid column: {$column}");
+           }else{
+               if (is_array($value)) {
+                   $query->whereIn($column, $value);
+               } elseif (is_string($value)) {
+                   $query->where($column, 'LIKE', "%$value%");
+               } else {
+                   $query->where($column, $value);
+               }
+           }
+
         });
-
     }
+
+
 
 
 }
