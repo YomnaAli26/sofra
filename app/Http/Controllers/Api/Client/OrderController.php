@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Client;
 
+use App\Enums\OrderStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\StoreOrderRequest;
 use App\Http\Resources\MealResource;
@@ -39,7 +40,7 @@ class OrderController extends Controller
 
     public function updateOrderStatus(Request $request,$id)
     {
-       $validatedData =  $request->validate(['action' => ['required','in:canceled,delivered',new ValidOrderStatus($id)]]);
+       $validatedData =  $request->validate(['action' => ['required','in:canceled,delivered',new ValidOrderStatus($id,[OrderStatusEnum::ACCEPTED])]]);
        $result = $this->orderService->updateOrderStatus($validatedData,$id);
         return !$result['status']
             ? response()->apiResponse($result['code'], message: $result['message'])

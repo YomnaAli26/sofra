@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum OrderStatusEnum: string
 {
+
     case PENDING = 'pending';
     case ACCEPTED = 'accepted';
     case REJECTED_FROM_CLIENT = 'rejected_from_client';

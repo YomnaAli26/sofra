@@ -10,7 +10,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
 class ValidOrderStatus implements ValidationRule
 {
     protected OrderStatusEnum $currentStatus;
-    public function __construct(protected $orderId)
+
+    public function __construct(protected $orderId,protected array $statusSupport)
     {
     }
 
@@ -28,18 +29,12 @@ class ValidOrderStatus implements ValidationRule
             return;
         }
         $this->currentStatus = $order->status;
-        if ($this->currentStatus == OrderStatusEnum::DELIVERED  && $value == 'canceled')
+
+        if (!in_array($this->currentStatus,$this->statusSupport))
         {
-            $fail("A delivered order cannot be canceled.");
-            return;
-
+            $fail("invalid order status. Status should be ".implode('or ', array_map(fn($status)=>$status->value,$this->statusSupport)));
         }
-        if ($this->currentStatus == OrderStatusEnum::CANCELED  && $value == 'delivered')
-        {
-            $fail("A canceled order cannot be delivered.");
 
-
-        }
 
 
     }

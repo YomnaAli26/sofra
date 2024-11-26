@@ -60,10 +60,13 @@ class OrderService
     public function getPreviousOrders()
     {
 
-        return $this->orderRepository->withRelations(['meals.restaurant'])->whereIn( 'status' ,[
+        return $this->orderRepository->withRelations(['meals.restaurant','client.area'])->whereIn( 'status' ,[
             OrderStatusEnum::COMPLETED,
             OrderStatusEnum::CANCELED,
-            ]);
+            ])->filter(function ($order)
+        {
+            return $order->where('client_id',auth('client')->user()->id);
+        });
     }
 
 }
