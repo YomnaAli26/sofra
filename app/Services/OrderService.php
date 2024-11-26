@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Enums\OrderStatusEnum;
-use App\Events\OrderCreatedEvent;
+use App\Events\OrderEvent;
 use App\Models\Order;
 use App\Repositories\Interfaces\OrderRepositoryInterface;
 

@@ -92,6 +92,12 @@ class RestaurantService
             ->find($id);
        return $restaurant->meals;
     }
+    public function getOffersForRestaurants()
+    {
+        $restaurant =$this->restaurantRepository->withRelations(['meals.restaurant'])
+            ->find($id);
+       return $restaurant->meals;
+    }
 
 
 }

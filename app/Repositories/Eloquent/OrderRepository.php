@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 
+use App\Events\OrderEvent;
 use App\Models\Meal;
 use App\Models\Order;
 use App\Models\Restaurant;
@@ -62,9 +63,11 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                 })->toArray()
             );
             DB::commit();
+            $order = $order->fresh(['meals.restaurant','restaurant']);
+            OrderEvent::dispatch($order,"created",new Restaurant());
             return [
                 'status' => true,
-                'data'=> $order->fresh(['meals.restaurant','restaurant']),
+                'data'=> $order,
             ];
 
 

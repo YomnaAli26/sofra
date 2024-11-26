@@ -6,20 +6,21 @@ use App\Models\Client;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Fcm\FcmChannel;
 use NotificationChannels\Fcm\FcmMessage;
 use NotificationChannels\Fcm\Resources\Notification as FcmNotification;
 
-class OrderCreatedNotification extends Notification
+class OrderNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Order $order,public Client $client)
+    public function __construct(public Order $order,public $action,public Model $model)
     {
 
     }
@@ -31,15 +32,15 @@ class OrderCreatedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database',FcmChannel::class];
+        return ['database'];
     }
-    public function toFcm($notifiable): FcmMessage
+/*    public function toFcm($notifiable): FcmMessage
     {
         return (new FcmMessage(notification: new FcmNotification(
-            title: __('notifications.order_created_title'),
-            body: __('notifications.order_created_message',[
+            title: __('notifications.order_'.$this->action.'_title'),
+            body: __('notifications.order_'.$this->action.'_message',[
                 'number'=> $this->order->number,
-                'client_name'=> $this->client->name,
+                'client_name'=> $this->model->name,
             ]),
         )))
             ->data(['data1' => 'value', 'data2' => 'value2'])
@@ -64,7 +65,7 @@ class OrderCreatedNotification extends Notification
                     ],
                 ],
             ]);
-    }
+    }*/
 
 
     /**
@@ -74,14 +75,15 @@ class OrderCreatedNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
+        dd($notifiable->getTable());
         return [
-            'title'=> __('notifications.order_created_title'),
-            'message'=> __('notifications.order_created_message',[
+            'title'=> __('notifications.order_'.$this->action.'_title'),
+            'message'=> __('notifications.order_'.$this->action.'_message',[
                 'number'=> $this->order->number,
-                'client_name'=> $this->client->name,
+                'client_name'=> $this->model->name,
             ]),
             'order_id' => $this->order->id,
-            'client_id' => $this->client->id,
+            'client_id' => $this->model->id,
             'created_at' => now()->toDateTimeString(),
         ];
     }

@@ -22,6 +22,11 @@ class OfferService
         return $this->offerRepository->withRelations(['restaurant'])
             ->getBy(['restaurant_id'=>auth('restaurant')->user()->id]);
     }
+    public function getOffersForRestaurants()
+    {
+        return $this->offerRepository->withRelations(['restaurant'])
+            ->paginate();
+    }
 
     public function createOffer($data)
     {
@@ -53,5 +58,6 @@ class OfferService
             $offer->delete();
         }
     }
+
 
 }
