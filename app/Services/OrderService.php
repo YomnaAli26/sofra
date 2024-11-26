@@ -52,7 +52,7 @@ class OrderService
 
     public function getCurrentOrders()
     {
-        return $this->orderRepository->withRelations(['meals.restaurant'])->getBy([
+        return $this->orderRepository->withRelations(['meals.restaurant','client.area'])->getBy([
             'status' => OrderStatusEnum::ACCEPTED,
             'client_id'=> auth('client')->user()->id,
             ]);
@@ -69,4 +69,53 @@ class OrderService
         });
     }
 
+    public function getNewOrdersForRestaurant()
+    {
+
+        return $this->orderRepository->withRelations(['meals.restaurant.area.city',
+            'meals.restaurant.category',
+            'client.area',
+            ])->getBy([
+            'status' => OrderStatusEnum::PENDING,
+            'restaurant_id'=> auth('restaurant')->user()->id,
+        ]);
+    }
+
+    public function getCurrentOrdersForRestaurant()
+    {
+
+        return $this->orderRepository->withRelations(['meals.restaurant.area.city',
+            'meals.restaurant.category',
+            'client.area',
+            ])->getBy([
+            'status' => OrderStatusEnum::DELIVERED,
+            'restaurant_id'=> auth('restaurant')->user()->id,
+        ]);
+    }
+
+    public function getPreviousOrdersForRestaurant()
+    {
+        return $this->orderRepository->withRelations(['meals.restaurant.area.city',
+            'meals.restaurant.category',
+            'client.area',
+        ])->whereIn( 'status' ,[
+            OrderStatusEnum::COMPLETED,
+            OrderStatusEnum::REJECTED,
+        ])->filter(function ($order)
+        {
+            return $order->where('restaurant_id',auth('restaurant')->user()->id);
+        });
+    }
+    public function updateOrderStatusForRestaurant($data,$id)
+    {
+        $order = $this->orderRepository->withRelations(['meals.restaurant'])->findBy([
+            'id' => $id,
+            'restaurant_id' => auth('restaurant')->user()->id,
+        ]);
+        $order->update([
+            'status' => OrderStatusEnum::from($data['action']),
+        ]);
+        return $order->refresh()->load('meals.restaurant');
+
+    }
 }

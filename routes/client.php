@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\Client\OrderController;
-use App\Http\Controllers\Api\Client\RestaurantController;
-use App\Http\Controllers\Api\Client\ProfileController;
-use App\Http\Controllers\Api\Client\RestaurantMealController;
-use App\Http\Controllers\Api\Client\ReviewController;
+use App\Http\Controllers\Api\Client\{OrderController,
+    ReviewController,
+    RestaurantMealController,
+    ProfileController,
+    RestaurantController};
+
 use App\Http\Controllers\Api\Client\Auth\{ForgotPasswordController,
     LoginController,
     RegisterController,
