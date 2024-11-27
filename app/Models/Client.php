@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{HasMany,BelongsTo};
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class Client extends Model
 {
-    use HasFactory,HasApiTokens;
+    use HasFactory, HasApiTokens, Notifiable;
     protected $casts =[
       'password'=>'hashed'
     ];

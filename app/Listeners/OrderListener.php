@@ -23,13 +23,13 @@ class OrderListener
      */
     public function handle(OrderEvent $event): void
     {
-        if ($event->model instanceof Restaurant)
+        if ($event->notifiable == 'restaurant')
         {
-            $event->order->restaurant->notify(new OrderNotification($event->order,$event->action,$event->model));
+            $event->order->restaurant->notify(new OrderNotification($event->order,$event->action));
         }
         else
         {
-            $event->order->client->notify(new OrderNotification($event->order,$event->action,$event->model));
+            $event->order->client->notify(new OrderNotification($event->order,$event->action));
 
         }
     }

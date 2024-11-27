@@ -64,7 +64,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
             );
             DB::commit();
             $order = $order->fresh(['meals.restaurant','restaurant']);
-            OrderEvent::dispatch($order,"created",new Restaurant());
+            OrderEvent::dispatch($order,"created",'restaurant');
             return [
                 'status' => true,
                 'data'=> $order,

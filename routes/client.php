@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\Restaurant\OfferController;
+
 use App\Http\Controllers\Api\Client\{OrderController,
     ReviewController,
     RestaurantMealController,

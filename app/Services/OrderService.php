@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\OrderStatusEnum;
 use App\Events\OrderEvent;
 use App\Models\Order;
+use App\Models\Restaurant;
 use App\Repositories\Interfaces\OrderRepositoryInterface;
 
 
@@ -41,7 +42,9 @@ class OrderService
         $order->update([
             'status' => OrderStatusEnum::from($data['action']),
         ]);
-        return $order->refresh()->load('meals.restaurant');
+        $order = $order->refresh()->load('meals.restaurant');
+        OrderEvent::dispatch($order, $data['action'], 'restaurant');
+        return $order;
 
     }
 
@@ -115,7 +118,9 @@ class OrderService
         $order->update([
             'status' => OrderStatusEnum::from($data['action']),
         ]);
-        return $order->refresh()->load('meals.restaurant');
+        $order = $order->refresh()->load('meals.restaurant');
+        OrderEvent::dispatch($order, $data['action'], 'client');
+        return $order;
 
     }
 }

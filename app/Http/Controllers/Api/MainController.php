@@ -15,7 +15,7 @@ use Laravel\Sanctum\PersonalAccessToken;
 class MainController extends Controller
 {
     public function __construct(
-        public CityService                $cityService,
+        public CityService    $cityService,
         public SettingService $settingService,
         public ContactService $contactService,
         public AreaService $areaService,

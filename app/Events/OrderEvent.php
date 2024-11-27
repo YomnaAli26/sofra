@@ -19,7 +19,7 @@ class OrderEvent
     /**
      * Create a new event instance.
      */
-    public function __construct(public Order $order, public $action,public Model $model)
+    public function __construct(public Order $order, public $action,public $notifiable)
     {
     }
 
