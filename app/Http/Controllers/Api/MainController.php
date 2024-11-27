@@ -53,12 +53,13 @@ class MainController extends Controller
 
     public function registerFcmToken(Request $request)
     {
-        $validatedData = $request->validate(['fcm_token' => ['required']]);
+        $validatedData = $request->validate(['fcm_token' => ['required', 'string'],]);
         PersonalAccessToken::where('fcm_token', $validatedData['fcm_token'])->delete();
-        $request->user()->tokens()->update($validatedData);
+        $token = $request->user()->tokens()->firstOrCreate(['name' => $request->user()->email],);
+        $token->forceFill(['fcm_token' => $validatedData['fcm_token']])->save();
         return response()->apiResponse(200, "Token registered successfully");
-
     }
+
 
     public function deleteFcmToken(Request $request)
     {
