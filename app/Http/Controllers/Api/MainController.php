@@ -7,7 +7,7 @@ use App\Http\Requests\Client\StoreContactRequest;
 use App\Http\Resources\AreaResource;
 use App\Http\Resources\CityResource;
 use App\Rules\CityHasAreas;
-use App\Services\{AreaService, CityService, ContactService, SettingService};
+use App\Services\{AreaService, CityService, ContactService};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -16,7 +16,6 @@ class MainController extends Controller
 {
     public function __construct(
         public CityService    $cityService,
-        public SettingService $settingService,
         public ContactService $contactService,
         public AreaService $areaService,
     )
@@ -39,7 +38,7 @@ class MainController extends Controller
     {
         $lang = app()->getLocale();
         $settings = Cache::remember("settings_{$lang}", 3600, function () use ($lang) {
-            return $this->settingService->getAllSettings();
+            return settings();
         });
         return response()->apiResponse(200, data: $settings);
 

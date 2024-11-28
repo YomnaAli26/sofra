@@ -25,15 +25,15 @@ class OrderService
             'client_id' => auth('client')->user()->id,
         ]);
 
-       return $order ?? [
-           'code' => 404,
-           'status' => false,
-           'message'=>'invalid order id'
+        return $order ?? [
+            'code' => 404,
+            'status' => false,
+            'message' => 'invalid order id'
 
-       ];
+        ];
     }
 
-    public function updateOrderStatus($data,$id)
+    public function updateOrderStatus($data, $id)
     {
         $order = $this->orderRepository->withRelations(['meals.restaurant'])->findBy([
             'id' => $id,
@@ -50,26 +50,24 @@ class OrderService
 
     public function processOrder($data): array
     {
-         return $this->orderRepository->createOrder($data);
+        return $this->orderRepository->createOrder($data);
     }
 
     public function getCurrentOrders()
     {
-        return $this->orderRepository->withRelations(['meals.restaurant','client.area'])->getBy([
+        return $this->orderRepository->withRelations(['meals.restaurant', 'client.area'])->getBy([
             'status' => OrderStatusEnum::ACCEPTED,
-            'client_id'=> auth('client')->user()->id,
-            ]);
+            'client_id' => auth('client')->user()->id,
+        ]);
     }
+
     public function getPreviousOrders()
     {
 
-        return $this->orderRepository->withRelations(['meals.restaurant','client.area'])->whereIn( 'status' ,[
-            OrderStatusEnum::COMPLETED,
-            OrderStatusEnum::CANCELED,
-            ])->filter(function ($order)
-        {
-            return $order->where('client_id',auth('client')->user()->id);
-        });
+        return $this->orderRepository->withRelations(['meals.restaurant', 'client.area'])
+            ->whereIn('status', [OrderStatusEnum::COMPLETED, OrderStatusEnum::CANCELED,])
+            ->getBy(['restaurant_id' => auth('restaurant')->user()->id]);
+
     }
 
     public function getNewOrdersForRestaurant()
@@ -78,9 +76,9 @@ class OrderService
         return $this->orderRepository->withRelations(['meals.restaurant.area.city',
             'meals.restaurant.category',
             'client.area',
-            ])->getBy([
+        ])->getBy([
             'status' => OrderStatusEnum::PENDING,
-            'restaurant_id'=> auth('restaurant')->user()->id,
+            'restaurant_id' => auth('restaurant')->user()->id,
         ]);
     }
 
@@ -90,9 +88,9 @@ class OrderService
         return $this->orderRepository->withRelations(['meals.restaurant.area.city',
             'meals.restaurant.category',
             'client.area',
-            ])->getBy([
+        ])->getBy([
             'status' => OrderStatusEnum::DELIVERED,
-            'restaurant_id'=> auth('restaurant')->user()->id,
+            'restaurant_id' => auth('restaurant')->user()->id,
         ]);
     }
 
@@ -101,15 +99,11 @@ class OrderService
         return $this->orderRepository->withRelations(['meals.restaurant.area.city',
             'meals.restaurant.category',
             'client.area',
-        ])->whereIn( 'status' ,[
-            OrderStatusEnum::COMPLETED,
-            OrderStatusEnum::REJECTED,
-        ])->filter(function ($order)
-        {
-            return $order->where('restaurant_id',auth('restaurant')->user()->id);
-        });
+        ])->whereIn('status', [OrderStatusEnum::COMPLETED, OrderStatusEnum::REJECTED,])
+            ->getBy(['restaurant_id' => auth('restaurant')->user()->id]);
     }
-    public function updateOrderStatusForRestaurant($data,$id)
+
+    public function updateOrderStatusForRestaurant($data, $id)
     {
         $order = $this->orderRepository->withRelations(['meals.restaurant'])->findBy([
             'id' => $id,

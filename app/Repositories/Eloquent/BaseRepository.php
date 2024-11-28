@@ -26,20 +26,21 @@ class BaseRepository implements BaseInterface
 
     public function all()
     {
-        return $this->model->with($this->relations)->latest()->get();
+        return $this->query()->latest()->get();
     }
 
     public function paginate($perPage = 10)
     {
-        return $this->model->with($this->relations)->latest()->paginate($perPage);
+        return $this->query()->latest()->paginate($perPage);
     }
 
     public function filter()
     {
         if (!method_exists($this->model,'filter')) {
-            return $this->model->with($this->relations)->filter();
+            throw new \BadMethodCallException('Filter method not defined in ' . get_class($this->model));
         }
-        throw new \BadMethodCallException('Filter method not defined in ' . get_class($this->model));
+        $this->query()->filter();
+        return $this;
     }
 
 
@@ -51,7 +52,7 @@ class BaseRepository implements BaseInterface
 
     public function find($id)
     {
-        return $this->model->with($this->relations)->find($id);
+        return $this->query()->find($id);
     }
 
     public function update(array $data, $id)
@@ -72,16 +73,17 @@ class BaseRepository implements BaseInterface
 
     public function getBy(array $conditions)
     {
-        return $this->model->with($this->relations)->where($conditions)->get();
+        return$this->query()->where($conditions)->get();
     }
 
     public function findBy(array $conditions)
     {
-        return $this->model->with($this->relations)->where($conditions)->first();
+        return $this->query()->where($conditions)->first();
 
     }
-    public function whereIn(string $column, array $values)
+    public function whereIn(string $column, array $values): static
     {
-        return $this->model->with($this->relations)->whereIn($column, $values)->get();
+         $this->query()->whereIn($column, $values);
+         return $this;
     }
 }
