@@ -52,7 +52,7 @@ class BaseRepository implements BaseInterface
 
     public function find($id)
     {
-        return $this->query()->find($id);
+        return $this->query()->findOrFail($id);
     }
 
     public function update(array $data, $id)

@@ -25,13 +25,13 @@ class RestaurantController extends Controller
     }
     public function show($id)
     {
-        $restaurant = $this->restaurantService->showRestaurant($id);
+        $restaurant = $this->restaurantService->showResource($id);
         return response()->apiResponse(data:RestaurantResource::make($restaurant));
     }
 
     public function getOffers(OfferService $offerService)
     {
-        $offers = $offerService->getOffersForRestaurants();
+        $offers = $offerService->getData(['restaurant'],true);
         return response()->apiResponse(data:OfferResource::collection($offers));
 
     }

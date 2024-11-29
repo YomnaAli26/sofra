@@ -21,7 +21,7 @@ class OfferResource extends JsonResource
             'from' => $this->from,
             'to' => $this->to,
             'restaurant' => RestaurantResource::make($this->restaurant),
-            'image'=>$this->image_path,
+            'image' => $this->image_path,
         ];
     }
 }

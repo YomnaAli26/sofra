@@ -22,7 +22,7 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
-        $result = $this->orderService->processOrder($request->validated());
+        $result = $this->orderService->processOrderForClient($request->validated());
 
         return !$result['status']
             ? response()->apiResponse($result['code'], message: $result['message'])
@@ -31,7 +31,7 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-        $result = $this->orderService->showOrder($id);
+        $result = $this->orderService->showOrderForClient($id);
         return !$result['status']
             ? response()->apiResponse($result['code'], message: $result['message'])
             : response()->apiResponse(data: OrderResource::make($result));
@@ -41,7 +41,7 @@ class OrderController extends Controller
     public function updateOrderStatus(Request $request,$id)
     {
        $validatedData =  $request->validate(['action' => ['required','in:canceled,delivered',new ValidOrderStatus($id,[OrderStatusEnum::ACCEPTED])]]);
-       $result = $this->orderService->updateOrderStatus($validatedData,$id);
+       $result = $this->orderService->updateOrderStatusForClient($validatedData,$id);
         return !$result['status']
             ? response()->apiResponse($result['code'], message: $result['message'])
             : response()->apiResponse(data: OrderResource::make($result));
@@ -50,13 +50,13 @@ class OrderController extends Controller
 
     public function currentOrders()
     {
-        $orders = $this->orderService->getCurrentOrders();
+        $orders = $this->orderService->getCurrentOrdersForClient();
         return response()->apiResponse(data: OrderResource::collection($orders));
 
     }
     public function previousOrders()
     {
-        $orders = $this->orderService->getPreviousOrders();
+        $orders = $this->orderService->getPreviousOrdersForClient();
         return response()->apiResponse(data: OrderResource::collection($orders));
 
     }

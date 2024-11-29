@@ -8,18 +8,19 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
-class ClientService
+class ClientService extends BaseService
 {
     /**
      * Create a new class instance.
      */
     public function __construct(public ClientRepositoryInterface $clientRepository)
     {
-
+        parent::__construct($clientRepository);
     }
+
     public function register($data)
     {
-       return $this->clientRepository->create($data);
+        return $this->clientRepository->create($data);
     }
 
     /**
@@ -28,11 +29,11 @@ class ClientService
     public function login($data)
     {
         $client = $this->clientRepository->findBy(["email" => $data["email"]]);
-       if (!Hash::check($data['password'],$client->password)) {
-           throw ValidationException::withMessages([
-              'email' =>  __('auth.failed'),
-           ]);
-       }
+        if (!Hash::check($data['password'], $client->password)) {
+            throw ValidationException::withMessages([
+                'email' => __('auth.failed'),
+            ]);
+        }
         return $client;
     }
 
@@ -40,16 +41,16 @@ class ClientService
     {
         $client = $this->clientRepository->findBy(["email" => $email]);
         $client->generateCode();
-        Mail::to($client->email)-> send(new ForgotPassword($client));
+        Mail::to($client->email)->send(new ForgotPassword($client));
         return $client;
     }
+
     public function resetPassword($data)
     {
         $client = $this->clientRepository->findBy(["email" => $data['email']]);
-        if ($data["code"] != $client->code)
-        {
+        if ($data["code"] != $client->code) {
             throw ValidationException::withMessages([
-                'code' =>  __('auth.failed'),
+                'code' => __('auth.failed'),
             ]);
 
         }
@@ -58,11 +59,12 @@ class ClientService
         return $client;
     }
 
-    public function updateProfileData($data,$id)
+    public function updateProfileData($data, $id)
     {
-        return $this->clientRepository->update($data,$id);
+        return $this->clientRepository->update($data, $id);
 
     }
+
     public function showProfileData($id)
     {
         return $this->clientRepository->find($id);

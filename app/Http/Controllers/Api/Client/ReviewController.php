@@ -23,7 +23,7 @@ class ReviewController extends Controller
     }
     public function store(StoreReviewRequest $request)
     {
-        $review = $this->reviewService->createReview($request->validated());
+        $review = $this->reviewService->storeResource($request->validated());
         return response()->apiResponse(data:ReviewResource::make($review));
     }
 }

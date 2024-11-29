@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
-class RestaurantService
+class RestaurantService extends BaseService
 {
     /**
      * Create a new class instance.
      */
     public function __construct(public RestaurantRepositoryInterface $restaurantRepository)
     {
+        parent::__construct($restaurantRepository);
 
     }
     public function register($data)
@@ -77,10 +78,6 @@ class RestaurantService
 
     }
 
-    public function showRestaurant($id)
-    {
-       return $this->restaurantRepository->find($id);
-    }
     public function getRestaurants($perPage = 10)
     {
 
@@ -92,12 +89,7 @@ class RestaurantService
             ->find($id);
        return $restaurant->meals;
     }
-    public function getOffersForRestaurants()
-    {
-        $restaurant =$this->restaurantRepository->withRelations(['meals.restaurant'])
-            ->find($id);
-       return $restaurant->meals;
-    }
+
 
 
 }

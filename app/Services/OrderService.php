@@ -9,16 +9,18 @@ use App\Models\Restaurant;
 use App\Repositories\Interfaces\OrderRepositoryInterface;
 
 
-class OrderService
+class OrderService extends BaseService
 {
     /**
      * Create a new class instance.
      */
     public function __construct(public OrderRepositoryInterface $orderRepository)
     {
+        parent::__construct($orderRepository);
+
     }
 
-    public function showOrder($id): array
+    public function showOrderForClient($id): array
     {
         $order = $this->orderRepository->withRelations(['meals.restaurant'])->findBy([
             'id' => $id,
@@ -33,7 +35,7 @@ class OrderService
         ];
     }
 
-    public function updateOrderStatus($data, $id)
+    public function updateOrderStatusForClient($data, $id)
     {
         $order = $this->orderRepository->withRelations(['meals.restaurant'])->findBy([
             'id' => $id,
@@ -48,12 +50,12 @@ class OrderService
 
     }
 
-    public function processOrder($data): array
+    public function processOrderForClient($data): array
     {
         return $this->orderRepository->createOrder($data);
     }
 
-    public function getCurrentOrders()
+    public function getCurrentOrdersForClient()
     {
         return $this->orderRepository->withRelations(['meals.restaurant', 'client.area'])->getBy([
             'status' => OrderStatusEnum::ACCEPTED,
@@ -61,7 +63,7 @@ class OrderService
         ]);
     }
 
-    public function getPreviousOrders()
+    public function getPreviousOrdersForClient()
     {
 
         return $this->orderRepository->withRelations(['meals.restaurant', 'client.area'])

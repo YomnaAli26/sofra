@@ -25,4 +25,6 @@ class Offer extends Model implements HasMedia
     {
         return $this->getFirstMediaUrl('offers');
     }
+
+
 }

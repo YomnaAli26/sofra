@@ -30,7 +30,7 @@ class MealController extends Controller
      */
     public function store(StoreMealRequest $request)
     {
-        $meal = $this->mealService->createMeal($request->validated());
+        $meal = $this->mealService->storeResource($request->validated());
         return response()->apiResponse(status: 201,data: MealResource::make($meal));
 
     }
@@ -40,8 +40,8 @@ class MealController extends Controller
      */
     public function show($id)
     {
-        $meal = $this->mealService->showMeal($id);
-        return response()->apiResponse(status: 201,data: MealResource::make($meal));
+        $meal = $this->mealService->showResource($id);
+        return response()->apiResponse(data: MealResource::make($meal));
     }
 
     /**
@@ -49,7 +49,7 @@ class MealController extends Controller
      */
     public function update(UpdateMealRequest $request,  $id)
     {
-        $meal = $this->mealService->updateMeal($id,$request->validated());
+        $meal = $this->mealService->updateResource($id,$request->validated());
         return response()->apiResponse(status: 200,data: MealResource::make($meal));
     }
 
@@ -58,7 +58,7 @@ class MealController extends Controller
      */
     public function destroy($id)
     {
-        $this->mealService->deleteMeal($id);
+        $this->mealService->deleteResource($id);
         return response()->apiResponse(204);
     }
 }

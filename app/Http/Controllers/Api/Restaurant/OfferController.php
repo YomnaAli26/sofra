@@ -19,7 +19,7 @@ class OfferController extends Controller
      */
     public function index()
     {
-        $offers= $this->offerService->getRestaurantOffers();
+        $offers = $this->offerService->getRestaurantOffers();
         return response()->apiResponse(data: OfferResource::collection($offers));
     }
 
@@ -28,7 +28,7 @@ class OfferController extends Controller
      */
     public function store(StoreOfferRequest $request)
     {
-        $offer = $this->offerService->createOffer($request->validated());
+        $offer = $this->offerService->storeResource($request->validated());
         return response()->apiResponse(201,data: OfferResource::make($offer));
 
     }
@@ -38,7 +38,7 @@ class OfferController extends Controller
      */
     public function show($id)
     {
-        $offer = $this->offerService->showOffer($id);
+        $offer = $this->offerService->showResource($id);
         return response()->apiResponse(data: OfferResource::make($offer));
     }
 
@@ -47,7 +47,7 @@ class OfferController extends Controller
      */
     public function update(UpdateOfferRequest $request, string $id)
     {
-        $offer = $this->offerService->updateOffer($id,$request->validated());
+        $offer = $this->offerService->updateResource($id,$request->validated());
         return response()->apiResponse(data: OfferResource::make($offer));
     }
 
@@ -56,7 +56,7 @@ class OfferController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->offerService->deleteOffer($id);
+        $this->offerService->deleteResource($id);
         return response()->apiResponse(204);
 
     }
