@@ -30,7 +30,7 @@ class BaseService
         $dataWithoutFiles = Arr::except($data, array_keys($this->files));
         $modelData = $this->repository->create($dataWithoutFiles);
         if (!empty($this->files)) {
-            $this->handleMediaUploads($modelData);
+            handleMediaUploads($this->files,$modelData);
             return $modelData;
         }
         return $modelData;
@@ -49,8 +49,8 @@ class BaseService
 
         if (!empty($this->files)) {
             $modelData = $this->repository->find($id);
-            $this->clearMedia($modelData);
-            $this->handleMediaUploads($modelData);
+            clearMedia($modelData);
+            handleMediaUploads($this->files,$modelData);
             $modelData->update($dataWithoutFiles);
             return $modelData;
         }
@@ -60,31 +60,11 @@ class BaseService
     public function deleteResource($id): void
     {
         $modelData = $this->repository->find($id);
-        $this->clearMedia($modelData);
+        if (method_exists($modelData, 'hasMedia') && $modelData->hasMedia())
+        {
+            clearMedia($modelData);
+        }
         $modelData->delete();
 
-    }
-
-    protected function getMediaCollectionName($modelData): string
-    {
-        return Str::plural(Str::lcfirst(class_basename($modelData)));
-    }
-
-    protected function clearMedia($modelData): void
-    {
-        $collectionName = $this->getMediaCollectionName($modelData);
-        $modelData->clearMediaCollection($collectionName);
-    }
-
-    protected function handleMediaUploads($modelData, bool $clearExisting = false): void
-    {
-        $collectionName = $this->getMediaCollectionName($modelData);
-
-        if ($clearExisting) {
-            $modelData->clearMediaCollection($collectionName);
-        }
-        foreach ($this->files as $file) {
-            $modelData->addMedia($file)->toMediaCollection($collectionName);
-        }
     }
 }

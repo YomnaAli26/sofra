@@ -21,6 +21,12 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware("api")
                 ->prefix('api/client/v1')
                 ->group(base_path("routes/client.php"));
+
+            Route::middleware("web")
+                ->prefix('admin/dashboard')
+                ->as('admin.')
+                ->namespace('App\Http\Controllers\Admin')
+                ->group(base_path("routes/admin.php"));
         }
     )
     ->withMiddleware(function (Middleware $middleware) {

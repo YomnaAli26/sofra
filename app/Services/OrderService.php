@@ -4,8 +4,6 @@ namespace App\Services;
 
 use App\Enums\OrderStatusEnum;
 use App\Events\OrderEvent;
-use App\Models\Order;
-use App\Models\Restaurant;
 use App\Repositories\Interfaces\OrderRepositoryInterface;
 
 

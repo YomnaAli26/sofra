@@ -5,13 +5,9 @@ namespace App\Http\Controllers\Api\Client;
 use App\Enums\OrderStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\StoreOrderRequest;
-use App\Http\Resources\MealResource;
 use App\Http\Resources\OrderResource;
-use App\Http\Resources\RestaurantResource;
 use App\Rules\ValidOrderStatus;
-use App\Services\MealService;
 use App\Services\OrderService;
-use App\Services\RestaurantService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
