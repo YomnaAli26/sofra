@@ -17,12 +17,30 @@ class BaseService
         $this->files = request()->allFiles();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function getData($relations = [], $usePagination = false, $perPage = 10)
     {
-        return $usePagination
-            ? $this->repository->withRelations($relations)->paginate($perPage)
-            : $this->repository->withRelations($relations)->all();
+        $repoModel = $this->repository->model;
+
+        if (!method_exists($repoModel, 'scopeFilter')) {
+
+            if ($usePagination) {
+                return $this->repository->withRelations($relations)->paginate($perPage);
+            }
+            return $this->repository->withRelations($relations)->all();
+        }
+
+        if ($usePagination) {
+            return $this->repository
+                ->withRelations($relations)
+                ->filter()
+                ->paginate($perPage);
+        }
+
     }
+
 
 
     public function storeResource(array $data)

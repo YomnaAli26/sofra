@@ -3,21 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
+use App\Services\OfferService;
 use App\Http\Requests\{StoreCategoryRequest, UpdateCategoryRequest};
 use App\Services\CityService;
 
 
 class OfferController extends DashboardController
 {
-    public function __construct(CityService $cityService)
+    public function __construct(OfferService $offerService)
     {
-        parent::__construct($cityService);
-        $this->storeRequestClass = new StoreCategoryRequest();
-        $this->updateRequestClass = new UpdateCategoryRequest();
+        parent::__construct($offerService);
         $this->indexView = 'offers.index';
-        $this->createView = 'offers.create';
-        $this->editView = 'offers.edit';
-        $this->showView = 'offers.show';
+        $this->relations = ['restaurant'];
         $this->usePagination = true;
         $this->successMessage = 'Process success';
     }

@@ -54,11 +54,26 @@
 
                 <!-- Admins -->
                 <li class="nav-item">
+                    <a href="{{ route('admin.offers.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-person-lock" title="Contact Us Settings"></i>
+                        <p>Offers</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin.restaurant-payments.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-person-lock" title="Contact Us Settings"></i>
+                        <p>Restaurants Payments</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{ route('admin.admins.index') }}" class="nav-link">
                         <i class="nav-icon bi bi-person-lock" title="Contact Us Settings"></i>
                         <p>Admins</p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a href="{{ route('admin.change-password') }}" class="nav-link">
                         <i class="nav-icon bi bi-shield-lock" title="Change Password"></i>

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class BaseRepository implements BaseInterface
 {
     protected array $relations = [];
-    public function __construct(protected $model)
+    public function __construct(public $model)
     {
     }
     public function query(): \Illuminate\Database\Eloquent\Builder
