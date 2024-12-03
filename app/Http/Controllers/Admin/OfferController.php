@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
 use App\Services\OfferService;
-use App\Http\Requests\{StoreCategoryRequest, UpdateCategoryRequest};
-use App\Services\CityService;
 
 
 class OfferController extends DashboardController
@@ -15,6 +13,7 @@ class OfferController extends DashboardController
         parent::__construct($offerService);
         $this->indexView = 'offers.index';
         $this->relations = ['restaurant'];
+        $this->partialFolder = 'offers';
         $this->usePagination = true;
         $this->successMessage = 'Process success';
     }

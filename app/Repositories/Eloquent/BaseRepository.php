@@ -3,10 +3,9 @@
 namespace App\Repositories\Eloquent;
 
 
-
-
 use App\Repositories\Interfaces\BaseInterface;
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\{Builder, Collection};
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BaseRepository implements BaseInterface
 {
@@ -14,7 +13,7 @@ class BaseRepository implements BaseInterface
     public function __construct(public $model)
     {
     }
-    public function query(): \Illuminate\Database\Eloquent\Builder
+    public function query():Builder
     {
         return $this->model->with($this->relations);
     }
@@ -24,23 +23,22 @@ class BaseRepository implements BaseInterface
         return $this;
     }
 
-    public function all()
+    public function all(): Collection
     {
         return $this->query()->latest()->get();
     }
 
-    public function paginate($perPage = 10)
+    public function paginate($perPage = 10): LengthAwarePaginator
     {
         return $this->query()->latest()->paginate($perPage);
     }
 
     public function filter()
     {
-        if (!method_exists($this->model,'filter')) {
+        if (!method_exists($this->model,'scopeFilter')) {
             throw new \BadMethodCallException('Filter method not defined in ' . get_class($this->model));
         }
-        $this->query()->filter();
-        return $this;
+        return $this->query()->filter();
     }
 
 

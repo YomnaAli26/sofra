@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\RestaurantStatusEnum;
 use App\Traits\Filterable;
+use App\Traits\HasFcmTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,17 +17,18 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Restaurant extends Model implements HasMedia
 {
-    use HasFactory, HasApiTokens, InteractsWithMedia, Filterable,Notifiable;
-    protected $casts =[
-        'password'=>'hashed',
-        'status'=> RestaurantStatusEnum::class,
+    use HasFactory, HasApiTokens, InteractsWithMedia, Filterable, Notifiable, HasFcmTokens;
+
+    protected $casts = [
+        'password' => 'hashed',
+        'status' => RestaurantStatusEnum::class,
     ];
     protected $hidden = [
         'password',
     ];
 
     protected $fillable = [
-        'name', 'email', 'phone','password',
+        'name', 'email', 'phone', 'password',
         'area_id', 'category_id', 'min_order',
         'delivery_fee', 'status', 'avg_rate',
         'contact_phone', 'whatsapp_number'
@@ -38,14 +40,17 @@ class Restaurant extends Model implements HasMedia
             'offers',
             'reviews',
         ];
+
     private function getDeviceTokens()
     {
         return $this->tokens()->fcm_token;
     }
+
     public function routeNotificationForFcm(): array
     {
         return $this->getDeviceTokens();
     }
+
     public function area(): BelongsTo
     {
         return $this->belongsTo(Area::class);
@@ -81,6 +86,7 @@ class Restaurant extends Model implements HasMedia
     {
         return $this->hasMany(Order::class);
     }
+
     public function generateCode(): void
     {
         $this->code = rand(0000, 9999);
@@ -97,7 +103,6 @@ class Restaurant extends Model implements HasMedia
     {
         return $this->getFirstMediaUrl('restaurant') ?: asset('images/default.png');
     }
-
 
 
 }
