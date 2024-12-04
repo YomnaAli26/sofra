@@ -33,12 +33,14 @@ Route::group(['middleware' => 'auth:client'], function () {
     Route::apiResource('restaurant-meals',RestaurantMealController::class)->only(['index','show']);
     Route::apiResource('restaurant-reviews',ReviewController::class)->only(['index','store']);
 
-    Route::apiResource('orders',OrderController::class)->only(['store','show']);
     Route::controller(OrderController::class)->group(function () {
         Route::patch('orders/{order}','updateOrderStatus');
         Route::get('current-orders','currentOrders');
         Route::get('previous-orders','previousOrders');
     });
+
+    Route::apiResource('orders',OrderController::class)->only(['store','show']);
+
 
 
 });
