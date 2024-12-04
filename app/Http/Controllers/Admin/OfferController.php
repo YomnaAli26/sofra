@@ -16,6 +16,7 @@ class OfferController extends DashboardController
         $this->indexView = 'offers.index';
         $this->relations = ['restaurant'];
         $this->usePagination = true;
+        $this->useFilter = true;
         $this->successMessage = 'Process success';
     }
 

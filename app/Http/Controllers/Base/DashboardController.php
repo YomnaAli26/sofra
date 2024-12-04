@@ -24,6 +24,7 @@ class DashboardController extends Controller
     protected $successMessage;
     protected $relations = [];
     protected $usePagination;
+    protected $useFilter;
     protected $perPage;
 
     public function __construct(public $service)
@@ -32,7 +33,7 @@ class DashboardController extends Controller
 
     public function index(): View|Factory|Application
     {
-        $data = $this->service->getData($this->relations,$this->usePagination,$this->perPage);
+        $data = $this->service->getData($this->relations,$this->usePagination,$this->perPage,$this->useFilter);
         return view("{$this->baseFolder}{$this->indexView}", compact('data'));
     }
 
