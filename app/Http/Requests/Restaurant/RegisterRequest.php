@@ -28,7 +28,7 @@ class RegisterRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'area_id' => ['required', 'exists:areas,id'],
             'category_id' => ['required', 'exists:categories,id'],
-            'image' => ['nullable', 'image'],
+            'image' => ['required', 'image'],
             'min_order' => ['required', 'integer', 'min:1'],
             'delivery_fee' => ['required', 'integer', 'min:1'],
             'contact_phone' => ['required', 'string', 'min:11', 'max:11', 'unique:restaurants,contact_phone'],

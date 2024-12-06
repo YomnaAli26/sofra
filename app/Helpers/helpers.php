@@ -7,7 +7,7 @@ if (!function_exists('settings')) {
     function settings()
     {
         $settingRepository = app(SettingRepositoryInterface::class);
-        return $settingRepository->all();
+        return $settingRepository->allAsKeyValue();
     }
 
 
@@ -25,9 +25,11 @@ if (!function_exists('handleMediaUploads')) {
     function handleMediaUploads($files, $modelData, bool $clearExisting = false): void
     {
         $collectionName = getMediaCollectionName($modelData);
-
         if ($clearExisting) {
             $modelData->clearMediaCollection($collectionName);
+        }
+        if (!is_array($files)) {
+            $modelData->addMedia($files)->toMediaCollection($collectionName);
         }
         foreach ($files as $file) {
             $modelData->addMedia($file)->toMediaCollection($collectionName);

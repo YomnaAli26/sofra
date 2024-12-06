@@ -10,8 +10,6 @@ enum OrderStatusEnum: string
     case REJECTED = 'rejected';
     case DELIVERED = 'delivered';
 
-    case COMPLETED = 'completed';
     case CANCELED = 'canceled';
-    case CONFIRMED = 'confirmed';
 }
 

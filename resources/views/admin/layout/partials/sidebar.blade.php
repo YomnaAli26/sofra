@@ -67,60 +67,46 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('admin.admins.index') }}" class="nav-link">
-                        <i class="nav-icon bi bi-person-lock" title="Contact Us Settings"></i>
-                        <p>Admins</p>
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('admin.admins.index') }}" class="nav-link">--}}
+{{--                        <i class="nav-icon bi bi-person-lock" title="Contact Us Settings"></i>--}}
+{{--                        <p>Admins</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
-                <li class="nav-item">
-                    <a href="{{ route('admin.change-password') }}" class="nav-link">
-                        <i class="nav-icon bi bi-shield-lock" title="Change Password"></i>
-                        <p>Change Password</p>
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('admin.change-password') }}" class="nav-link">--}}
+{{--                        <i class="nav-icon bi bi-shield-lock" title="Change Password"></i>--}}
+{{--                        <p>Change Password</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
 
                 <!-- Clients -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.clients.index') }}" class="nav-link">
-                        <i class="nav-icon bi bi-people"></i>
-                        <p>Clients</p>
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('admin.clients.index') }}" class="nav-link">--}}
+{{--                        <i class="nav-icon bi bi-people"></i>--}}
+{{--                        <p>Clients</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
                 <!-- Roles -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.roles.index') }}" class="nav-link">
-                        <i class="nav-icon bi bi-person-badge"></i>
-                        <p>Roles</p>
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('admin.roles.index') }}" class="nav-link">--}}
+{{--                        <i class="nav-icon bi bi-person-badge"></i>--}}
+{{--                        <p>Roles</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
                 <!-- Permissions -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.permissions.index') }}" class="nav-link">
-                        <i class="nav-icon bi bi-shield-lock"></i>
-                        <p>Permissions</p>
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('admin.permissions.index') }}" class="nav-link">--}}
+{{--                        <i class="nav-icon bi bi-shield-lock"></i>--}}
+{{--                        <p>Permissions</p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
-                <!-- Posts -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.posts.index') }}" class="nav-link">
-                        <i class="nav-icon bi bi-card-text"></i>
-                        <p>Posts</p>
-                    </a>
-                </li>
 
-                <!-- Donation Requests -->
-                <li class="nav-item">
-                    <a href="{{ route('admin.donation-requests.index') }}" class="nav-link">
-                        <i class="nav-icon bi bi-heart-fill"></i>
-                        <p>Donation Requests</p>
-                    </a>
-                </li>
 
                 <!-- Contact Us -->
                 <li class="nav-item">

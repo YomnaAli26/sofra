@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OrderStatusEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
@@ -31,6 +32,10 @@ class Order extends Model
         return 'ORD-' . date('YmdHis');
     }
 
+    public function scopeStatus(Builder $builder, $status): Builder
+    {
+        return $builder->where('status', $status);
+    }
 
     public function meals(): BelongsToMany
     {

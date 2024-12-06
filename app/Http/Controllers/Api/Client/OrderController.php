@@ -18,7 +18,7 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
-        $result = $this->orderService->processOrderForClient($request->validated());
+        $result = $this->orderService->createOrder($request->validated());
 
         return !$result['status']
             ? response()->apiResponse($result['code'], message: $result['message'])

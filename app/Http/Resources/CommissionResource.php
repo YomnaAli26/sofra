@@ -14,15 +14,11 @@ class CommissionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
         return [
-            'id' => $this->id,
-            'restaurant_sales' => $this->restaurantSales,
-            'net' => $this->net,
-            'paid' => $this->paid,
-            'app_commission' => $this->appCommission,
-            'rest' => $this->rest,
-
+            'restaurant_sales' => $this['restaurant_sales'],
+            'app_commission' => $this['app_commission'],
+            'paid' => $this['restaurant_paid'],
+            'rest' => $this['app_commission'] - $this['restaurant_paid'],
         ];
     }
 }

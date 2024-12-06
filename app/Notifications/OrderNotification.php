@@ -34,15 +34,17 @@ class OrderNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database',FcmChannel::class];
     }
-    /*    public function toFcm($notifiable): FcmMessage
+        public function toFcm($notifiable): FcmMessage
         {
+            $notifiable instanceof Restaurant ? $senderName = 'client' : $senderName = 'restaurant';
+
             return (new FcmMessage(notification: new FcmNotification(
                 title: __('notifications.order_'.$this->action.'_title'),
                 body: __('notifications.order_'.$this->action.'_message',[
-                    'number'=> $this->order->number,
-                    'client_name'=> $this->model->name,
+                    'number' => $this->order->number,
+                    'sender_name' => $this->order->{$senderName}->name,
                 ]),
             )))
                 ->data(['data1' => 'value', 'data2' => 'value2'])
@@ -67,7 +69,7 @@ class OrderNotification extends Notification
                         ],
                     ],
                 ]);
-        }*/
+        }
 
 
     /**

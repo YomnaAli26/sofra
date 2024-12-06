@@ -27,7 +27,7 @@ class RestaurantResource extends JsonResource
             'contact_phone' => $this->contact_phone,
             'whatsapp_number' => $this->whatsapp_number,
             'image'=> $this->image_path,
-            'status'=> $this->status,
+            'status'=> $this->status->label(),
             'token'=>$this->when(isset($this->token),$this->token),
         ];
     }

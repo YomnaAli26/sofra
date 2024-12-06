@@ -34,7 +34,7 @@ class OrderController extends Controller
     }
     public function confirmOrder(Request $request,$id)
     {
-        $validatedData =  $request->validate(['action' => ['required','in:confirmed',new ValidOrderStatus($id,[OrderStatusEnum::DELIVERED])]]);
+        $validatedData =  $request->validate(['action' => ['required','in:delivered',new ValidOrderStatus($id,[OrderStatusEnum::ACCEPTED])]]);
         $result = $this->orderService->updateOrderStatusForRestaurant($validatedData,$id);
         return !$result['status']
             ? response()->apiResponse($result['code'], message: $result['message'])

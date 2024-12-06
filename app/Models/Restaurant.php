@@ -40,6 +40,9 @@ class Restaurant extends Model implements HasMedia
             'offers',
             'reviews',
         ];
+    protected $attributes = [
+        'status' => 0,
+    ];
 
     private function getDeviceTokens()
     {
@@ -101,7 +104,7 @@ class Restaurant extends Model implements HasMedia
 
     public function getImagePathAttribute(): string
     {
-        return $this->getFirstMediaUrl('restaurant') ?: asset('images/default.png');
+        return $this->getFirstMediaUrl('restaurants') ?: asset('images/default.png');
     }
 
 

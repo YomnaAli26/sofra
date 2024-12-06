@@ -24,6 +24,15 @@ class Client extends Model
         'name', 'area_id'
     ];
 
+    private function getDeviceTokens()
+    {
+        return $this->tokens()->fcm_token;
+    }
+
+    public function routeNotificationForFcm(): array
+    {
+        return $this->getDeviceTokens();
+    }
 
     public function area(): BelongsTo
     {

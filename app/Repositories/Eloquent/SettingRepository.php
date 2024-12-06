@@ -12,7 +12,7 @@ class SettingRepository extends BaseRepository implements SettingRepositoryInter
         parent::__construct($setting);
     }
 
-    public function all(): \Illuminate\Database\Eloquent\Collection
+    public function allAsKeyValue()
     {
         return $this->model->all()->pluck('value', 'key');
     }
