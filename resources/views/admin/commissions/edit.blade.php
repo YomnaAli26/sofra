@@ -1,10 +1,14 @@
 @extends("admin.layout.master")
-@section("title","Categories")
-@section("breadcrumb_header","Categories")
+
+@section("title","Edit Commission")
+
+@section("breadcrumb_header","Edit Commission")
+
 @section("breadcrumb")
     @parent
-    <li class="breadcrumb-item active" aria-current="page">categories</li>
+    <li class="breadcrumb-item active" aria-current="page">Edit Commission</li>
 @endsection
+
 @section("content")
     <div class="app-content"> <!--begin::Container-->
         <div class="container-fluid"> <!--begin::Row-->
@@ -14,36 +18,61 @@
                     <!--begin::Form Validation-->
                     <div class="card  card-outline mb-4"> <!--begin::Header-->
                         <div class="card-header">
-                            <div class="card-title">Update Category</div>
+                            <div class="card-title">Update Commission</div>
                         </div> <!--end::Header--> <!--begin::Form-->
-                        <form class="needs-validation" method="post" action="{{ route("admin.categories.update",$model->id) }}" novalidate> <!--begin::Body-->
+                        <form class="needs-validation" method="post" action="{{ route("admin.commissions.update", $model->id) }}" novalidate> <!--begin::Body-->
                             @csrf
                             @method("PUT")
                             <div class="card-body"> <!--begin::Row-->
                                 <div class="row g-3"> <!--begin::Col-->
-                                    <div class="col-md-12"><label for="validationCustom01"
-                                                                  class="form-label">Name (English)</label>
-                                        <input type="text" name="name[en]" value="{{ $model->getTranslation('name','en') }}" class="form-control"
-                                               id="validationCustom01" required>
-                                        @error('name.en')
+                                    <div class="col-md-12"><label for="restaurant_id"
+                                                                  class="form-label">Restaurant</label>
+                                        <select name="restaurant_id" class="form-control" id="restaurant_id" required>
+                                            <option value="">Select Restaurant</option>
+                                            @foreach($restaurants as $restaurant)
+                                                <option value="{{ $restaurant->id }}" @selected($model->restaurant_id == $restaurant->id)>
+                                                    {{ $restaurant->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('restaurant_id')
                                         <div class="error-message">{{ $message }}</div>
                                         @enderror
-                                        <div class="valid-feedback">Looks good!</div>
-                                    </div> <!--end::Col--> <!--begin::Col-->
+                                    </div> <!--end::Col-->
                                 </div> <!--end::Row-->
                                 <div class="row g-3"> <!--begin::Col-->
-                                    <div class="col-md-12"><label for="validationCustom01"
-                                                                  class="form-label">Name (Arabic)</label>
-                                        <input type="text" name="name[ar]" value="{{ $model->getTranslation('name','ar') }}" class="form-control"
-                                               id="validationCustom01" required>
-                                        @error('name.ar')
+                                    <div class="col-md-12"><label for="validationCustom02"
+                                                                  class="form-label">Paid Amount</label>
+                                        <input type="text" name="paid" value="{{ $model->paid }}" class="form-control"
+                                               id="validationCustom02" required>
+                                        @error('paid')
                                         <div class="error-message">{{ $message }}</div>
                                         @enderror
-                                        <div class="valid-feedback">Looks good!</div>
-                                    </div> <!--end::Col--> <!--begin::Col-->
+                                    </div> <!--end::Col-->
+                                </div> <!--end::Row-->
+                                <div class="row g-3"> <!--begin::Col-->
+                                    <div class="col-md-12"><label for="validationCustom03"
+                                                                  class="form-label">Commission Date</label>
+                                        <input type="date" name="date" value="{{ $model->date }}" class="form-control"
+                                               id="validationCustom03" required>
+                                        @error('date')
+                                        <div class="error-message">{{ $message }}</div>
+                                        @enderror
+                                    </div> <!--end::Col-->
+                                </div> <!--end::Row-->
+                                <div class="row g-3"> <!--begin::Col-->
+                                    <div class="col-md-12"><label for="validationCustom04"
+                                                                  class="form-label">Notes</label>
+                                        <textarea name="notes" class="form-control" id="validationCustom04">{{ $model->notes }}</textarea>
+                                        @error('notes')
+                                        <div class="error-message">{{ $message }}</div>
+                                        @enderror
+                                    </div> <!--end::Col-->
                                 </div> <!--end::Row-->
                             </div> <!--end::Body--> <!--begin::Footer-->
-                            <div class="card-footer"> <button class="btn btn-success" type="submit">Update</button> </div> <!--end::Footer-->
+                            <div class="card-footer">
+                                <button class="btn btn-success" type="submit">Update</button>
+                            </div> <!--end::Footer-->
                         </form> <!--end::Form--> <!--begin::JavaScript-->
                         <script>
                             // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -76,5 +105,4 @@
             </div>
         </div>
     </div>
-
 @endsection

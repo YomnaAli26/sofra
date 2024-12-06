@@ -61,7 +61,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('admin.restaurant-payments.index') }}" class="nav-link">
+                    <a href="{{ route('admin.commissions.index') }}" class="nav-link">
                         <i class="nav-icon bi bi-person-lock" title="Contact Us Settings"></i>
                         <p>Restaurants Payments</p>
                     </a>

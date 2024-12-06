@@ -28,17 +28,17 @@
                                     <div class="col-md-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="text" name="email" id="email" class="form-control"
-                                               value="{{ request('email') }}" placeholder="Search by description">
+                                               value="{{ request('email') }}" placeholder="Search by email">
                                     </div>
                                     <div class="col-md-3">
                                         <label for="phone" class="form-label">Phone</label>
                                         <input type="text" name="phone" id="phone" class="form-control"
-                                               value="{{ request('phone') }}" placeholder="Search by restaurant">
+                                               value="{{ request('phone') }}" placeholder="Search by phone">
                                     </div>
                                     <div class="col-md-2">
                                         <label for="message" class="form-label">Message</label>
                                         <input type="text" name="message" id="message" class="form-control"
-                                               value="{{ request('message') }}">
+                                               value="{{ request('message') }}" placeholder="Search by message">
                                     </div>
                                     <div class="col-md-2">
                                         <label for="status" class="form-label">status</label>

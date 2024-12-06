@@ -1,78 +1,112 @@
 @extends("admin.layout.master")
-@section("title","Categories")
-@section("breadcrumb_header","Categories")
+
+@section("title", "Commissions")
+@section("breadcrumb_header", "Commissions")
 @section("breadcrumb")
     @parent
-    <li class="breadcrumb-item active" aria-current="page">categories</li>
+    <li class="breadcrumb-item active" aria-current="page">Commissions</li>
 @endsection
+
 @section("content")
-    <div class="app-content"> <!--begin::Container-->
-        <div class="container-fluid"> <!--begin::Row-->
-            <div class="row g-4"> <!--begin::Col-->
+    <div class="app-content">
+        <div class="container-fluid">
+            <div class="row g-4">
                 <div class="col-12">
-
-                    <!--begin::Form Validation-->
-                    <div class="card  card-outline mb-4"> <!--begin::Header-->
+                    <div class="card card-outline mb-4">
                         <div class="card-header">
-                            <div class="card-title">Create Category</div>
-                        </div> <!--end::Header--> <!--begin::Form-->
-                        <form class="needs-validation" method="post" action="{{ route("admin.categories.store") }}" novalidate> <!--begin::Body-->
+                            <h3 class="card-title">Create Commission</h3>
+                        </div>
+
+                        <!-- Form Start -->
+                        <form class="needs-validation" method="post"
+                              action="{{ route('admin.commissions.store') }}" novalidate>
                             @csrf
-                            <div class="card-body"> <!--begin::Row-->
-                                <div class="row g-3"> <!--begin::Col-->
-                                    <div class="col-md-12"><label for="validationCustom01"
-                                                                  class="form-label">Name (English)</label>
-                                        <input type="text" name="name[en]" value="{{ old("name.en") }}" class="form-control"
-                                               id="validationCustom01" required>
-                                        @error('name.en')
-                                        <div class="error-message">{{ $message }}</div>
-                                        @enderror
-                                        <div class="valid-feedback">Looks good!</div>
-                                    </div> <!--end::Col--> <!--begin::Col-->
-                                </div> <!--end::Row-->
-                                <div class="row g-3"> <!--begin::Col-->
-                                    <div class="col-md-12"><label for="validationCustom01"
-                                                                  class="form-label">Name (Arabic)</label>
-                                        <input type="text" name="name[ar]" value="{{ old("name.ar") }}" class="form-control"
-                                               id="validationCustom01" required>
-                                        @error('name.ar')
-                                        <div class="error-message">{{ $message }}</div>
-                                        @enderror
-                                        <div class="valid-feedback">Looks good!</div>
-                                    </div> <!--end::Col--> <!--begin::Col-->
-                                </div> <!--end::Row-->
-                            </div> <!--end::Body--> <!--begin::Footer-->
-                            <div class="card-footer"> <button class="btn btn-success" type="submit">Create</button> </div> <!--end::Footer-->
-                        </form> <!--end::Form--> <!--begin::JavaScript-->
-                        <script>
-                            // Example starter JavaScript for disabling form submissions if there are invalid fields
-                            (() => {
-                                "use strict";
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <!-- Restaurant ID -->
+                                    <div class="col-md-12">
+                                        <label for="restaurant-id" class="form-label">Restaurants</label>
+                                        <select name="restaurant_id"
+                                                class="form-control @error('restaurant_id') is-invalid @enderror"
+                                                id="restaurant-id" required>
+                                            <option value="" selected disabled>Select Restaurant</option>
+                                            @foreach($restaurants as $restaurant)
+                                                <option value="{{ $restaurant->id }}"> {{ $restaurant->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('restaurant_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @else
+                                            <div class="valid-feedback">Looks good!</div>
+                                            @enderror
+                                    </div>
 
-                                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                                const forms =
-                                    document.querySelectorAll(".needs-validation");
+                                    <!-- Paid -->
+                                    <div class="col-md-12">
+                                        <label for="paid" class="form-label">Paid Amount</label>
+                                        <input type="text" name="paid" value="{{ old('paid') }}"
+                                               class="form-control @error('paid') is-invalid @enderror"
+                                               id="paid" required>
+                                        @error('paid')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @else
+                                            <div class="valid-feedback">Looks good!</div>
+                                            @enderror
+                                    </div>
 
-                                // Loop over them and prevent submission
-                                Array.from(forms).forEach((form) => {
-                                    form.addEventListener(
-                                        "submit",
-                                        (event) => {
-                                            if (!form.checkValidity()) {
-                                                event.preventDefault();
-                                                event.stopPropagation();
-                                            }
+                                    <!-- Notes -->
+                                    <div class="col-md-12">
+                                        <label for="notes" class="form-label">Notes</label>
+                                        <textarea name="notes" class="form-control @error('notes') is-invalid @enderror"
+                                                  id="notes">{{ old('notes') }}</textarea>
+                                        @error('notes')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @else
+                                            <div class="valid-feedback">Optional, looks good!</div>
+                                            @enderror
+                                    </div>
 
-                                            form.classList.add("was-validated");
-                                        },
-                                        false
-                                    );
-                                });
-                            })();
-                        </script> <!--end::JavaScript-->
-                    </div> <!--end::Form Validation-->
+                                    <!-- Date -->
+                                    <div class="col-md-12">
+                                        <label for="date" class="form-label">Date</label>
+                                        <input type="date" name="date" value="{{ old('date') }}"
+                                               class="form-control @error('date') is-invalid @enderror"
+                                               id="date" required>
+                                        @error('date')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @else
+                                            <div class="valid-feedback">Looks good!</div>
+                                            @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <button class="btn btn-success" type="submit">Create</button>
+                            </div>
+                        </form>
+                        <!-- Form End -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        (() => {
+            "use strict";
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
 @endsection
