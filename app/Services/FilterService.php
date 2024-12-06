@@ -60,6 +60,7 @@ class FilterService
     {
         foreach ($filters as $filter) {
 
+
             $value = $this->request->input($filter);
 
             $method = match (true) {

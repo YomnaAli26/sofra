@@ -1,9 +1,9 @@
 @extends("admin.layout.master")
-@section("title", "Offers")
-@section("breadcrumb_header", "Offers")
+@section("title", "contact-us")
+@section("breadcrumb_header", "contact-us")
 @section("breadcrumb")
     @parent
-    <li class="breadcrumb-item active" aria-current="page">Offers</li>
+    <li class="breadcrumb-item active" aria-current="page">contacts</li>
 @endsection
 @section("content")
     <div class="app-content">
@@ -14,36 +14,42 @@
                     <x-alert type="danger"/>
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h3 class="card-title">Offers</h3>
+                            <h3 class="card-title">contacts</h3>
                         </div>
                         <div class="card-body">
                             <!--begin::Filter Form-->
                             <form id="offerForm" class="mb-4">
                                 <div class="row g-3">
                                     <div class="col-md-3">
-                                        <label for="name" class="form-label">Offer Name</label>
+                                        <label for="name" class="form-label">Name</label>
                                         <input type="text" name="name" id="name" class="form-control"
                                                value="{{ request('name') }}" placeholder="Search by name">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="description" class="form-label">Offer Description</label>
-                                        <input type="text" name="description" id="description" class="form-control"
-                                               value="{{ request('description') }}" placeholder="Search by description">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="text" name="email" id="email" class="form-control"
+                                               value="{{ request('email') }}" placeholder="Search by description">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="restaurant" class="form-label">Restaurant</label>
-                                        <input type="text" name="restaurant-name" id="restaurant" class="form-control"
-                                               value="{{ request('restaurant-name') }}" placeholder="Search by restaurant">
+                                        <label for="phone" class="form-label">Phone</label>
+                                        <input type="text" name="phone" id="phone" class="form-control"
+                                               value="{{ request('phone') }}" placeholder="Search by restaurant">
                                     </div>
                                     <div class="col-md-2">
-                                        <label for="from" class="form-label">Start Date</label>
-                                        <input type="date" name="from" id="from" class="form-control"
-                                               value="{{ request('from') }}">
+                                        <label for="message" class="form-label">Message</label>
+                                        <input type="text" name="message" id="message" class="form-control"
+                                               value="{{ request('message') }}">
                                     </div>
                                     <div class="col-md-2">
-                                        <label for="to" class="form-label">End Date</label>
-                                        <input type="date" name="to" id="to" class="form-control"
-                                               value="{{ request('to') }}">
+                                        <label for="status" class="form-label">status</label>
+                                        <select name="status" id=status" class="form-control">
+                                            @foreach(\App\Enums\ContactStatusEnum::cases() as $statusEnum)
+                                                <option
+                                                    value="{{ $statusEnum->value }}"> {{ $statusEnum->value}} </option>
+
+                                            @endforeach
+                                        </select>
+
                                     </div>
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary w-100 mt-4">
@@ -55,7 +61,7 @@
                             <!--end::Filter Form-->
 
                             <div id="offersTable">
-                                @include('admin.offers.partials.offers_table', ['data' => $data])
+                                @include('admin.contact-us.partials.contacts_table', ['data' => $data])
                             </div>
                         </div>
                     </div>

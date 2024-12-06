@@ -39,11 +39,13 @@
 
                                     </div> <!--end::Col--> <!--begin::Col-->
                                 </div> <!--end::Row-->
-                            </div> <!--end::Body--> <!--begin::Footer-->
+
                             <div class="card-footer">
                                 <button class="btn btn-success" type="submit">Update</button>
                             </div> <!--end::Footer-->
                         </form> <!--end::Form--> <!--begin::JavaScript-->
+                    </div> <!--end::Body--> <!--begin::Footer-->
+
                         <script>
                             // Example starter JavaScript for disabling form submissions if there are invalid fields
                             (() => {
@@ -74,5 +76,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\HasFcmTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{HasMany,BelongsTo};
+use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo};
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class Client extends Model
 {
-    use HasFactory, HasApiTokens, Notifiable;
-    protected $casts =[
-      'password'=>'hashed'
+    use HasFactory, HasApiTokens, Notifiable, HasFcmTokens;
+
+    protected $casts = [
+        'password' => 'hashed'
     ];
     protected $hidden = [
         'password',
@@ -21,6 +23,7 @@ class Client extends Model
         'email', 'phone', 'password',
         'name', 'area_id'
     ];
+
 
     public function area(): BelongsTo
     {
