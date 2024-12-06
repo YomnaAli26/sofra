@@ -10,7 +10,5 @@ Route::resource('/categories','CategoryController');
 Route::resource('/offers','OfferController');
 Route::resource('/contact-us','ContactController')->only(['index','destroy']);
 Route::resource('/restaurant-payments','CommissionController');
-Route::resource('/contact-us','ContactController')->only(['index','destroy']);
-
 Route::get('settings', 'SettingController@index')->name("settings.index");
 Route::put('settings', 'SettingController@update')->name("settings.update");

@@ -43,6 +43,7 @@
                                     <div class="col-md-2">
                                         <label for="status" class="form-label">status</label>
                                         <select name="status" id=status" class="form-control">
+                                            <option value="" selected disabled>Select Status</option>
                                             @foreach(\App\Enums\ContactStatusEnum::cases() as $statusEnum)
                                                 <option
                                                     value="{{ $statusEnum->value }}"> {{ $statusEnum->value}} </option>
@@ -61,7 +62,7 @@
                             <!--end::Filter Form-->
 
                             <div id="offersTable">
-                                @include('admin.contact-us.partials.contacts_table', ['data' => $data])
+                                @include('admin.contact-us.partials.contact-us_table', ['data' => $data])
                             </div>
                         </div>
                     </div>
@@ -81,10 +82,11 @@
                 let formData = $(this).serialize();
 
                 $.ajax({
-                    url: "{{ route('admin.offers.index') }}",
+                    url: "{{ route('admin.contact-us.index') }}",
                     type: "GET",
                     data: formData,
                     success: function (response) {
+                        console.log(response)
                         $('#offersTable').html(response);
                     },
                     error: function (xhr) {

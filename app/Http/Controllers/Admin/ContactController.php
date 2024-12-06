@@ -15,6 +15,7 @@ class ContactController extends DashboardController
         $this->indexView = 'contact-us.index';
         $this->partialFolder = 'contact-us';
         $this->usePagination = true;
+        $this->useFilter = true;
         $this->successMessage = 'Process success';
     }
 

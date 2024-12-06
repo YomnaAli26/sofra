@@ -24,6 +24,7 @@ class DashboardController extends Controller
     protected $successMessage;
     protected $relations = [];
     protected $usePagination;
+    protected bool $useFilter = false;
     protected $perPage;
     protected $partialFolder;
 
@@ -33,7 +34,7 @@ class DashboardController extends Controller
 
     public function index(): Factory|Application|View|string
     {
-        $data = $this->service->getData($this->relations,$this->usePagination,$this->perPage);
+        $data = $this->service->getData($this->relations,$this->usePagination,$this->perPage,$this->useFilter);
         if (request()->ajax())
         {
             return view("{$this->baseFolder}.{$this->partialFolder}.partials.{$this->partialFolder}_table", compact('data'))->render();

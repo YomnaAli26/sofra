@@ -15,6 +15,7 @@ class OfferController extends DashboardController
         $this->relations = ['restaurant'];
         $this->partialFolder = 'offers';
         $this->usePagination = true;
+        $this->useFilter = true;
         $this->successMessage = 'Process success';
     }
 
