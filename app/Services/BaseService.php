@@ -17,30 +17,18 @@ class BaseService
         $this->files = request()->allFiles();
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function getData($relations = [], $usePagination = false, $perPage = 10)
+    public function getData($relations = [], $usePagination = false, $perPage = 10, $useFilter = false)
     {
-        $repoModel = $this->repository->model;
-
-        if (!method_exists($repoModel, 'scopeFilter')) {
-
-            if ($usePagination) {
-                return $this->repository->withRelations($relations)->paginate($perPage);
-            }
-            return $this->repository->withRelations($relations)->all();
-        }
-
         if ($usePagination) {
-            return $this->repository
-                ->withRelations($relations)
-                ->filter()
-                ->paginate($perPage);
+            if ($useFilter) {
+                return $this->repository->withRelations($relations)->filter()->paginate($perPage);
+            }
+            return $this->repository->withRelations($relations)->paginate($perPage);
+
         }
+        return $this->repository->withRelations($relations)->all();
 
     }
-
 
 
     public function storeResource(array $data)
@@ -48,7 +36,7 @@ class BaseService
         $dataWithoutFiles = Arr::except($data, array_keys($this->files));
         $modelData = $this->repository->create($dataWithoutFiles);
         if (!empty($this->files)) {
-            handleMediaUploads($this->files,$modelData);
+            handleMediaUploads($this->files, $modelData);
             return $modelData;
         }
         return $modelData;
@@ -68,7 +56,7 @@ class BaseService
         if (!empty($this->files)) {
             $modelData = $this->repository->find($id);
             clearMedia($modelData);
-            handleMediaUploads($this->files,$modelData);
+            handleMediaUploads($this->files, $modelData);
             $modelData->update($dataWithoutFiles);
             return $modelData;
         }
@@ -78,8 +66,7 @@ class BaseService
     public function deleteResource($id): void
     {
         $modelData = $this->repository->find($id);
-        if (method_exists($modelData, 'hasMedia') && $modelData->hasMedia())
-        {
+        if (method_exists($modelData, 'hasMedia') && $modelData->hasMedia()) {
             clearMedia($modelData);
         }
         $modelData->delete();
