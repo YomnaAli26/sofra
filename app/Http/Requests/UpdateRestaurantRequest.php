@@ -24,16 +24,20 @@ class UpdateRestaurantRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string', 'max:255'],
-            'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:restaurants,email'],
-            'phone' => ['sometimes', 'string', 'min:11', 'max:11', 'unique:restaurants,phone'],
+            'email' => ['sometimes', 'string', 'email', 'max:255', Rule::unique('restaurants','email')
+            ->ignore(request()->route('restaurant'))],
+            'phone' => ['sometimes', 'string', 'min:11', 'max:11', Rule::unique('restaurants','phone')
+                ->ignore(request()->route('restaurant'))],
             'password' => ['sometimes', 'string', 'min:8', 'confirmed'],
             'area_id' => ['sometimes', 'exists:areas,id'],
             'category_id' => ['sometimes', 'exists:categories,id'],
             'image' => ['sometimes', 'image'],
             'min_order' => ['sometimes', 'integer', 'min:1'],
             'delivery_fee' => ['sometimes', 'integer', 'min:1'],
-            'contact_phone' => ['sometimes', 'string', 'min:11', 'max:11', 'unique:restaurants,contact_phone'],
-            'whatsapp_number' => ['sometimes', 'string', 'min:11', 'max:11', 'unique:restaurants,whatsapp_number'],
+            'contact_phone' => ['sometimes', 'string', 'min:11', 'max:11', Rule::unique('restaurants','contact_phone')
+                ->ignore(request()->route('restaurant'))],
+            'whatsapp_number' => ['sometimes', 'string', 'min:11', 'max:11', Rule::unique('restaurants','whatsapp_number')
+                ->ignore(request()->route('restaurant'))],
         ];
     }
 }

@@ -20,6 +20,7 @@ class DashboardController extends Controller
     protected $showView;
     protected $createData = [];
     protected $editData = [];
+    protected $indexData = [];
 
     protected $successMessage;
     protected $relations = [];
@@ -39,7 +40,7 @@ class DashboardController extends Controller
         {
             return view("{$this->baseFolder}.{$this->partialFolder}.partials.{$this->partialFolder}_table", compact('data'))->render();
         }
-        return view("{$this->baseFolder}{$this->indexView}", compact('data'));
+        return view("{$this->baseFolder}{$this->indexView}", compact('data'),$this->indexData);
     }
 
     public function create(): View|Factory|Application

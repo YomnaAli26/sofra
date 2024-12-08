@@ -21,11 +21,13 @@ class RegisterRequest extends FormRequest
      */
     public function rules(): array
     {
+        $passwordRules = ['required', 'string', 'min:8',];
+        if (!request()->routeIs('admin.*'))$passwordRules[] = 'confirmed';
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:clients,email'],
             'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:clients,phone'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => $passwordRules,
             'area_id' => ['required', 'exists:areas,id'],
         ];
     }

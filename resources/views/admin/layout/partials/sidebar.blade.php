@@ -89,12 +89,12 @@
 
 
                 <!-- Clients -->
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{ route('admin.clients.index') }}" class="nav-link">--}}
-{{--                        <i class="nav-icon bi bi-people"></i>--}}
-{{--                        <p>Clients</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.clients.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-people"></i>
+                        <p>Clients</p>
+                    </a>
+                </li>
 
                 <!-- Roles -->
 {{--                <li class="nav-item">--}}

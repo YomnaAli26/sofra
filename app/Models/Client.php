@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Filterable;
 use App\Traits\HasFcmTokens;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Client extends Model
 {
-    use HasFactory, HasApiTokens, Notifiable, HasFcmTokens;
+    use HasFactory, HasApiTokens, Notifiable, HasFcmTokens, Filterable;
 
     protected $casts = [
         'password' => 'hashed'
