@@ -91,6 +91,21 @@
                     }
                 });
             });
+            $(document).querySelectorAll('#toggle').forEach(function (a) {
+                a.addEventListener('click',function (e)
+                {
+                    let clientId = $this.dataset.id;
+                    e.preventDefault();
+                    $.ajax({
+                        url: "{{ route("admin.clients.toggle", ":id") }}".replace(":id", clientId),
+                        type: "PATCH"
+                    })
+                })
+            })
+            $('#toggle').on('click',function (e) {
+
+
+            })
         });
     </script>
 @endpush

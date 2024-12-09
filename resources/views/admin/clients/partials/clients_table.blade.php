@@ -18,6 +18,8 @@
             <td>{{$datum->phone}}</td>
             <td>{{$datum->area->name}}</td>
             <td>
+                <a class="btn btn-primary" id="toggle" data-id = "{{$datum->id}}" data-status="{{ $datum->is_active }}"
+                   href="{{ route("admin.clients.toggle") }}">activate</a>
                 <a class="btn btn-primary" href="{{ route("admin.clients.show",$datum->id) }}">show</a>
                 <a class="btn btn-info" href="{{ route("admin.clients.edit",$datum->id) }}">edit</a>
                 <a class="btn btn-danger" href="{{ route("admin.clients.destroy",$datum->id) }}"
