@@ -11,6 +11,7 @@ Route::resource('/offers','OfferController');
 Route::resource('/contact-us','ContactController')->only(['index','destroy']);
 Route::resource('/commissions','CommissionController');
 Route::resource('/restaurants','RestaurantController');
+Route::resource('/orders','OrderController')->only(['index','show']);
 
 Route::post('/clients/{client}/toggle',['ClientController' , 'toggle'])->name('clients.toggle');
 Route::resource('/clients','ClientController');

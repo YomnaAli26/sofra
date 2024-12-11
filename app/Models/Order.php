@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Enums\OrderStatusEnum;
+use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Order extends Model
 {
+    use Filterable;
     protected $fillable = [
         'address', 'payment_method', 'status',
         'notes', 'commission', 'delivery_fee',
