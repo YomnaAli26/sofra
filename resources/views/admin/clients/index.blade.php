@@ -74,6 +74,7 @@
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
+
             $('#clientForm').on('submit', function (e) {
                 e.preventDefault();
                 let formData = $(this).serialize();
@@ -91,21 +92,48 @@
                     }
                 });
             });
-            $(document).querySelectorAll('#toggle').forEach(function (a) {
-                a.addEventListener('click',function (e)
-                {
-                    let clientId = $this.dataset.id;
-                    e.preventDefault();
-                    $.ajax({
-                        url: "{{ route("admin.clients.toggle", ":id") }}".replace(":id", clientId),
-                        type: "PATCH"
-                    })
-                })
-            })
-            $('#toggle').on('click',function (e) {
 
 
-            })
+            $(document).on('click', '#toggle', function (e) {
+                e.preventDefault();
+
+                let toggleButton = $(this);
+                let clientId = toggleButton.data('id');
+                let currentStatus = parseInt(toggleButton.data('status'));
+                let toggleStatus = currentStatus === 1 ? 0 : 1;
+
+
+                console.log(`Client ID: ${clientId}, Current Status: ${currentStatus}, Toggling To: ${toggleStatus}`);
+
+
+                $.ajax({
+                    url: "{{ route('admin.clients.toggle', ':client') }}".replace(':client', clientId),
+                    type: "PATCH",
+                    data: JSON.stringify({
+                        is_active: toggleStatus
+                    }),
+                    contentType: 'application/json',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        console.log('Toggle successful:', response);
+
+                        toggleButton.data('status', toggleStatus);
+
+                        if (toggleStatus === 1) {
+                            toggleButton.text('Deactivate');
+                        } else {
+                            toggleButton.text('Activate');
+                        }
+                    },
+                    error: function (xhr) {
+                        console.error('Error toggling status:', xhr.responseText);
+                        alert('Failed to toggle status. Please try again.');
+                    }
+                });
+            });
         });
     </script>
 @endpush
+

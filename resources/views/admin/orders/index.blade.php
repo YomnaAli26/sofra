@@ -22,23 +22,27 @@
                                 <div class="row g-3">
                                     <div class="col-md-3">
                                         <label for="client_name" class="form-label">Client Name</label>
-                                        <input type="text" name="client_name" id="client_name" class="form-control"
-                                               value="{{ request('client_name') }}" placeholder="Search by client name">
+                                        <input type="text" name="client-name" id="client_name" class="form-control"
+                                               value="{{ request('client-name') }}" placeholder="Search by client name">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="restaurant_name" class="form-label">Restaurant Name</label>
-                                        <input type="text" name="restaurant_name" id="restaurant_name" class="form-control"
-                                               value="{{ request('restaurant_name') }}" placeholder="Search by restaurant">
+                                        <label for="restaurant-name" class="form-label">Restaurant Name</label>
+                                        <input type="text" name="restaurant-name" id="restaurant-name" class="form-control"
+                                               value="{{ request('restaurant-name') }}" placeholder="Search by restaurant">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="restaurant-name" class="form-label">Total</label>
+                                        <input type="text" name="total_amount" id="total_amount" class="form-control"
+                                               value="{{ request('total_amount') }}" placeholder="Search by total">
                                     </div>
                                     <div class="col-md-2">
-                                        <label for="from" class="form-label">From Date</label>
-                                        <input type="date" name="from" id="from" class="form-control"
-                                               value="{{ request('from') }}">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="to" class="form-label">To Date</label>
-                                        <input type="date" name="to" id="to" class="form-control"
-                                               value="{{ request('to') }}">
+                                        <label for="from" class="form-label">Status</label>
+                                        <select name="status" id="" class="form-control">
+                                            <option value="">__Select Status__</option>
+                                            @foreach($statuses as $status)
+                                                <option value="{{ $status->value }}">{{ ucfirst($status->name) }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-primary w-100 mt-4">

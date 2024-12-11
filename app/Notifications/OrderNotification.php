@@ -36,7 +36,7 @@ class OrderNotification extends Notification
     {
         return ['database',FcmChannel::class];
     }
-        public function toFcm($notifiable): FcmMessage
+        /*public function toFcm($notifiable): FcmMessage
         {
             $notifiable instanceof Restaurant ? $senderName = 'client' : $senderName = 'restaurant';
 
@@ -69,7 +69,7 @@ class OrderNotification extends Notification
                         ],
                     ],
                 ]);
-        }
+        }*/
 
 
     /**

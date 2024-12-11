@@ -12,7 +12,7 @@ class Order extends Model
 {
     use Filterable;
     protected $fillable = [
-        'address', 'payment_method', 'status',
+        'address', 'payment_method_id', 'status',
         'notes', 'commission', 'delivery_fee',
         'price', 'total_amount','net',
         'client_id', 'restaurant_id'
@@ -55,6 +55,11 @@ class Order extends Model
     public function restaurant(): BelongsTo
     {
         return $this->belongsTo(Restaurant::class);
+    }
+
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 
 }

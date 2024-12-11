@@ -72,6 +72,12 @@
                         <p>Restaurants</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.payment-methods.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-person-lock" title="Contact Us Settings"></i>
+                        <p>Payment Methods</p>
+                    </a>
+                </li>
 
 {{--                <li class="nav-item">--}}
 {{--                    <a href="{{ route('admin.admins.index') }}" class="nav-link">--}}

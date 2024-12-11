@@ -16,7 +16,7 @@
             <td>{{ $loop->iteration }}</td>
             <td>{{ $datum->client->name }}</td>
             <td>{{ $datum->restaurant->name }}</td>
-            <td>{{ $datum->total }}</td>
+            <td>{{ $datum->total_amount }}</td>
             <td>{{ $datum->status }}</td>
             <td>{{ $datum->created_at->format('Y-m-d') }}</td>
             <td>

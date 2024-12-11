@@ -18,11 +18,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        City::factory(10)->create();
-        Area::factory(10)->create();
-        Category::factory(10)->create();
-        $this->call(SettingSeeder::class);
-//        Meal::factory(10)->create();
+//        City::factory(10)->create();
+//        Area::factory(10)->create();
+//        Category::factory(10)->create();
+//        $this->call(SettingSeeder::class);
+        Meal::factory(10)->create();
 
     }
 }

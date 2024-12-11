@@ -33,7 +33,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'notes' => ['nullable', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:255'],
-            'payment_method' => ['required', 'string', 'max:255'],
+            'payment_method_id' => ['required', 'integer', 'exists:payment_methods,id'],
             'meals' => ['required', 'array'],
             'restaurant_id' => ['required', 'integer', 'exists:restaurants,id', function ($attribute, $value, $fail) {
                 $restaurant = Restaurant::query()->find($value);
