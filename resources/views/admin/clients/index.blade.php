@@ -100,7 +100,7 @@
                 let toggleButton = $(this);
                 let clientId = toggleButton.data('id');
                 let currentStatus = parseInt(toggleButton.data('status'));
-                let toggleStatus = currentStatus === 1 ? 0 : 1;
+                let toggleStatus = currentStatus !== 1;
 
 
                 console.log(`Client ID: ${clientId}, Current Status: ${currentStatus}, Toggling To: ${toggleStatus}`);
@@ -121,7 +121,7 @@
 
                         toggleButton.data('status', toggleStatus);
 
-                        if (toggleStatus === 1) {
+                        if (toggleStatus === true) {
                             toggleButton.text('Deactivate');
                         } else {
                             toggleButton.text('Activate');
