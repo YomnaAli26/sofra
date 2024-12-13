@@ -7,6 +7,8 @@ use App\Http\Controllers\Base\DashboardController;
 use App\Repositories\Interfaces\AreaRepositoryInterface;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Services\RestaurantService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use App\Http\Requests\{Restaurant\RegisterRequest, UpdateRestaurantRequest};
 
 
@@ -14,7 +16,7 @@ use App\Http\Requests\{Restaurant\RegisterRequest, UpdateRestaurantRequest};
 class RestaurantController extends DashboardController
 {
     public function __construct(
-        RestaurantService $restaurantService,
+        public RestaurantService $restaurantService,
         public AreaRepositoryInterface $areaRepository,
         public CategoryRepositoryInterface $categoryRepository,
 
@@ -40,6 +42,26 @@ class RestaurantController extends DashboardController
         $this->partialFolder = 'restaurants';
         $this->relations = ['area', 'category',];
         $this->successMessage = 'Process success';
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function toggle(Request $request, $userId): JsonResponse
+    {
+        $toggled = $this->restaurantService->toggleActive($request,$userId);
+        if ($toggled)
+        {
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to toggle user status.',
+        ], 400);
+
+
     }
 
 }

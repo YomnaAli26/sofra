@@ -8,6 +8,7 @@
         "php": "^8.2",
         "doctrine/dbal": "^4.2",
         "laravel-notification-channels/fcm": "^4.5",
+        "laravel/breeze": "*",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",

@@ -117,6 +117,20 @@ class RestaurantService extends BaseService
             ->commissions()
             ->pluck('paid')->sum();
     }
+    /**
+     * @throws \Exception
+     */
+    public function toggleActive($request, $restaurantId): true
+    {
+        $request->validate(['is_active' => 'required|boolean',]);
+        $restaurant = $this->restaurantRepository->find($restaurantId);
+        $boolUpdated = $restaurant->update($request->only(['is_active']));
+        if (!$boolUpdated) {
+            throw new \Exception('Failed to update restaurant status.');
+        }
+        return true;
+
+    }
 
 
 }

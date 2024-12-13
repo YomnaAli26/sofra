@@ -100,11 +100,9 @@
                 let toggleButton = $(this);
                 let clientId = toggleButton.data('id');
                 let currentStatus = parseInt(toggleButton.data('status'));
-                let toggleStatus = currentStatus !== 1;
-
+                let toggleStatus = currentStatus === 1 ? 0 : 1;
 
                 console.log(`Client ID: ${clientId}, Current Status: ${currentStatus}, Toggling To: ${toggleStatus}`);
-
 
                 $.ajax({
                     url: "{{ route('admin.clients.toggle', ':client') }}".replace(':client', clientId),
@@ -119,12 +117,16 @@
                     success: function (response) {
                         console.log('Toggle successful:', response);
 
+                        // Update button data-status
                         toggleButton.data('status', toggleStatus);
 
-                        if (toggleStatus === true) {
+                        // Update button text and class
+                        if (toggleStatus === 1) {
                             toggleButton.text('Deactivate');
+                            toggleButton.removeClass('btn-success').addClass('btn-danger'); // Change to danger style
                         } else {
                             toggleButton.text('Activate');
+                            toggleButton.removeClass('btn-danger').addClass('btn-success'); // Change to success style
                         }
                     },
                     error: function (xhr) {

@@ -82,5 +82,48 @@
                 });
             });
         });
+
+        // Handle toggle button
+        $(document).on('click', '#toggle', function (e) {
+            e.preventDefault();
+
+            let toggleButton = $(this);
+            let restaurantId = toggleButton.data('id');
+            let currentStatus = parseInt(toggleButton.data('status'));
+            let toggleStatus = currentStatus === 1 ? 0 : 1;
+
+            console.log(`User ID: ${restaurantId}, Current Status: ${currentStatus}, Toggling To: ${toggleStatus}`);
+
+            $.ajax({
+                url: "{{ route('admin.restaurants.toggle', ':restaurant') }}".replace(':restaurant', restaurantId),
+                type: "PATCH",
+                data: JSON.stringify({
+                    is_active: toggleStatus
+                }),
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    console.log('Toggle successful:', response);
+
+                    // Update button data-status
+                    toggleButton.data('status', toggleStatus);
+
+                    // Update button text and class
+                    if (toggleStatus === 1) {
+                        toggleButton.text('Deactivate');
+                        toggleButton.removeClass('btn-success').addClass('btn-danger'); // Change to danger style
+                    } else {
+                        toggleButton.text('Activate');
+                        toggleButton.removeClass('btn-danger').addClass('btn-success'); // Change to success style
+                    }
+                },
+                error: function (xhr) {
+                    console.error('Error toggling status:', xhr.responseText);
+                    alert('Failed to toggle status. Please try again.');
+                }
+            });
+        });
     </script>
 @endpush

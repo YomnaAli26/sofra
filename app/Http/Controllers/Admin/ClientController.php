@@ -50,7 +50,7 @@ class ClientController extends DashboardController
     {
         $request->validate(['is_active' => 'required|boolean',]);
         $client = $this->clientRepository->find($clientId);
-        $client->update(['is_active' => $request->only(['is_active'])]);
+        $client->update($request->only(['is_active']));
         return response()->json([
             'success' => true,
         ]);

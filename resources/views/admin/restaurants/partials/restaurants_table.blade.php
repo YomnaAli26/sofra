@@ -24,6 +24,8 @@
             <td>{{$datum->area?->name}}</td>
             <td>{{$datum->category?->name}}</td>
             <td colspan="3">
+                <a class="btn btn-success" id="toggle"  data-id = "{{$datum->id}}" data-status="{{ $datum->is_active }}"
+                   href="{{ route("admin.restaurants.toggle",$datum->id) }}">Activate</a>
                 <a class="btn btn-primary" href="{{ route("admin.restaurants.show",$datum->id) }}">Show</a>
                 <a class="btn btn-info" href="{{ route("admin.restaurants.edit",$datum->id) }}">Edit</a>
                 <a class="btn btn-danger"

@@ -79,19 +79,19 @@
                     </a>
                 </li>
 
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{ route('admin.admins.index') }}" class="nav-link">--}}
-{{--                        <i class="nav-icon bi bi-person-lock" title="Contact Us Settings"></i>--}}
-{{--                        <p>Admins</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-person-lock" title="Contact Us Settings"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
 
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{ route('admin.change-password') }}" class="nav-link">--}}
-{{--                        <i class="nav-icon bi bi-shield-lock" title="Change Password"></i>--}}
-{{--                        <p>Change Password</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.users.change-password.form') }}" class="nav-link">
+                        <i class="nav-icon bi bi-shield-lock" title="Change Password"></i>
+                        <p>Change Password</p>
+                    </a>
+                </li>
 
 
                 <!-- Clients -->
