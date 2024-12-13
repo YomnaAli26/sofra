@@ -28,7 +28,7 @@ You can view the **Entity Relationship Diagram (ERD)** for the Sofra database by
 - **Laravel v11**
 - **PHP v8.2**
 - **MySQL**
-- **Spatie Permission v6.8**
+- **Spatie Permission v6.10.1**
 - **Spatie Media Library v11.10**
 - **Sanctum v4.0**
 - **Breeze v2.2.6**
