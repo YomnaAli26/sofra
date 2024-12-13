@@ -182,6 +182,10 @@ class OrderService extends BaseService
         $order = $order->refresh()->load('meals.restaurant');
         OrderEvent::dispatch($order, $data['action'], 'client');
         return $order;
+    }
+
+    public function print()
+    {
 
     }
 }

@@ -19,5 +19,6 @@ Route::resource('/orders','OrderController')->only(['index','show']);
 
 Route::patch('/clients/{client}/toggle','ClientController@toggle')->name('clients.toggle');
 Route::resource('/clients','ClientController');
+
 Route::get('settings', 'SettingController@index')->name("settings.index");
 Route::put('settings', 'SettingController@update')->name("settings.update");

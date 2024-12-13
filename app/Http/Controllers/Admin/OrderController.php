@@ -23,5 +23,8 @@ class OrderController extends DashboardController
         $this->relations = ['client', 'restaurant'];
         $this->successMessage = 'Process success';
     }
+    public function printOrder()
+    {
 
+    }
 }
