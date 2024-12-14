@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Middleware\LangMiddleware;
+use App\Http\Middleware\{AutoCheckPermission, LangMiddleware};
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -33,6 +33,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(append: [
             LangMiddleware::class,
         ]);
+        $middleware->alias([
+            'lang' => LangMiddleware::class,
+            'auto-check-permission' => AutoCheckPermission::class,
+        ]);
+        $middleware->redirectGuestsTo(fn()=> route("admin.login"));
+        $middleware->redirectUsersTo(fn()=> route("admin.dashboard"));
     })
     ->withExceptions(function (Exceptions $exceptions) {
 

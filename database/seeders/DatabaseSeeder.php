@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,11 +19,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//        City::factory(10)->create();
-//        Area::factory(10)->create();
-//        Category::factory(10)->create();
-//        $this->call(SettingSeeder::class);
-        Meal::factory(10)->create();
-
+        User::query()->create([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => 123456789,
+        ]);
+        City::factory(10)->create();
+        Area::factory(10)->create();
+        Category::factory(10)->create();
+        $this->call(SettingSeeder::class);
     }
 }
