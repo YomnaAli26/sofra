@@ -22,6 +22,7 @@ You can view the **Entity Relationship Diagram (ERD)** for the Sofra database by
 - **Enums**: Utilizes **Enums** to manage constants in a clean and organized manner.
 - **FCM Notifications**: **Firebase Cloud Messaging (FCM)** notifications for real-time updates.
 - **Database Notifications**: Supports **database notifications** to notify users about changes.
+- **Auto Check Permission Middleware**: Check **permissions** by adding routes column to permissions table in spatie package.
 
 ## Technologies
 
