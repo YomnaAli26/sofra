@@ -2,8 +2,13 @@
 
 namespace App\Providers;
 
+use App\Repositories\Eloquent\PermissionRepository;
+use App\Repositories\Eloquent\RoleRepository;
+use App\Repositories\Interfaces\PermissionRepositoryInterface;
+use App\Repositories\Interfaces\RoleRepositoryInterface;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Routing\Route;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -17,7 +22,7 @@ class RepositoryServiceProvider extends ServiceProvider
             $this->app->bind("App\\Repositories\\Interfaces\\{$model}RepositoryInterface",
                 "App\\Repositories\\Eloquent\\{$model}Repository");
         }
-
+        $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
     }
 
     /**

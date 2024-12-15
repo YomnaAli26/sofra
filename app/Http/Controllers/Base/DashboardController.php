@@ -18,6 +18,7 @@ class DashboardController extends Controller
     protected $createView;
     protected $editView;
     protected $showView;
+    protected $sharedData = [];
     protected $createData = [];
     protected $editData = [];
     protected $indexData = [];
@@ -40,12 +41,12 @@ class DashboardController extends Controller
         {
             return view("{$this->baseFolder}.{$this->partialFolder}.partials.{$this->partialFolder}_table", compact('data'))->render();
         }
-        return view("{$this->baseFolder}{$this->indexView}", compact('data'),$this->indexData);
+        return view("{$this->baseFolder}{$this->indexView}", compact('data'), array_merge($this->indexData,$this->sharedData));
     }
 
     public function create(): View|Factory|Application
     {
-        return view("{$this->baseFolder}{$this->createView}",$this->createData);
+        return view("{$this->baseFolder}{$this->createView}", $this->createData, $this->sharedData);
 
     }
 
@@ -60,14 +61,14 @@ class DashboardController extends Controller
     public function show($id): View|Factory|Application
     {
         $model = $this->service->showResource($id);
-        return view("{$this->baseFolder}{$this->showView}", compact("model"));
+        return view("{$this->baseFolder}{$this->showView}", compact("model"),$this->sharedData);
 
     }
 
     public function edit($id): View|Factory|Application
     {
         $model = $this->service->showResource($id);
-        return view("{$this->baseFolder}{$this->editView}", compact('model'),$this->editData);
+        return view("{$this->baseFolder}{$this->editView}", compact('model'), array_merge($this->editData, $this->sharedData));
 
     }
 

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\AdminRoleEnum;
 use App\Models\Area;
 use App\Models\Category;
 use App\Models\City;
@@ -19,14 +20,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::query()->create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
+        $user = User::query()->create([
+            'name' => 'Super Admin',
+            'email' => 'super-admin@admin.com',
             'password' => 123456789,
         ]);
-        City::factory(10)->create();
-        Area::factory(10)->create();
-        Category::factory(10)->create();
-        $this->call(SettingSeeder::class);
+        $user->assignRole(AdminRoleEnum::SUPER_ADMIN->value);
+//        City::factory(10)->create();
+//        Area::factory(10)->create();
+//        Category::factory(10)->create();
+        $this->call([
+            SettingSeeder::class,
+            RolesAndPermissionsSeeder::class,
+            ]);
     }
 }

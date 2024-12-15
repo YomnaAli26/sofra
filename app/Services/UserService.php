@@ -19,6 +19,25 @@ class UserService extends BaseService
         parent::__construct($userRepository);
     }
 
+    public function storeResource(array $data)
+    {
+        $user = $this->userRepository->create($data);
+        $user->assignRole($data['role']);
+        return $user;
+    }
+    public function updateResource($id,  $data)
+    {
+        $user = $this->userRepository->update($data,$id);
+        $user->assignRole($data['role']);
+        return $user;
+    }
+    public function deleteResource($id): void
+    {
+        $user = $this->userRepository->find($id);
+        $user->delete();
+        $user->syncRoles([]);
+    }
+
     /**
      * @throws \Exception
      */

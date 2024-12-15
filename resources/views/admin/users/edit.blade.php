@@ -53,6 +53,22 @@
                                         <div class="valid-feedback">Looks good!</div>
                                     </div>
 
+                                    <div class="col-md-12">
+                                        <label for="roles" class="form-label">role</label>
+                                        <select name="role" id="roles" class="form-control" required>
+                                            @foreach($roles as $role)
+                                                <option name="role" value="{{ $role->name }}" @selected($role->name == $model->roles->value('name'))>
+                                                    {{ ucwords(str_replace('_',' ',$role->name)) }}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+
+                                        @error('role')
+                                        <div class="error-message text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                 <!--end::Row-->
                             </div>
 

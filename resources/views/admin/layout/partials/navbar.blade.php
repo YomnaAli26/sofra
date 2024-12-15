@@ -67,12 +67,12 @@
                 </div>
             </li> <!--end::Notifications Dropdown Menu--> <!--begin::Fullscreen Toggle-->
             <li class="nav-item"> <a class="nav-link" href="#" data-lte-toggle="fullscreen"> <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i> <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none;"></i> </a> </li> <!--end::Fullscreen Toggle--> <!--begin::Admin Menu Dropdown-->
-{{--            <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="{{asset("admin")}}/assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">{{ auth()->guard('admin')->user()->name }}</span> </a>--}}
+            <li class="nav-item dropdown user-menu"> <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> <img src="{{asset("admin")}}/assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="User Image"> <span class="d-none d-md-inline">{{ auth()->guard('web')->user()->name }}</span> </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <!--begin::Admin Image-->
                     <li class="user-header text-bg-primary"> <img src="{{asset("admin")}}/assets/img/user2-160x160.jpg" class="rounded-circle shadow" alt="User Image">
                         <p>
-{{--                            {{auth()->guard('admin')->user()->name}}--}}
-{{--                            <small>Member since {{ auth()->guard('admin')->user()->created_at->format('M. Y')?? "Date Not Available" }}</small>--}}
+                            {{auth()->guard('web')->user()->name}}
+                            <small>Member since {{ auth()->guard('web')->user()->created_at->format('M. Y')?? "Date Not Available" }}</small>
                         </p>
                     </li> <!--end::Admin Image--> <!--begin::Menu Body-->
 
@@ -81,9 +81,9 @@
                         onclick="event.preventDefault();document.getElementById('sign-out-form').submit();">
                             Sign out
                         </a>
-{{--                        <form id="sign-out-form" action="{{ route("admin.logout") }}" method="post" style="display: none;">--}}
-{{--                            @csrf--}}
-{{--                        </form>--}}
+                        <form id="sign-out-form" action="{{ route("admin.logout") }}" method="post" style="display: none;">
+                            @csrf
+                        </form>
                     </li> <!--end::Menu Footer-->
                 </ul>
             </li> <!--end::Admin Menu Dropdown-->

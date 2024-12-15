@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Base\DashboardController;
 
 
+use App\Repositories\Interfaces\RoleRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
@@ -20,6 +21,7 @@ class UserController extends DashboardController
     public function __construct(
         public UserService $userService,
         public UserRepositoryInterface $userRepository,
+        public RoleRepositoryInterface $roleRepository,
 
     )
     {
@@ -29,6 +31,9 @@ class UserController extends DashboardController
         $this->indexView = 'users.index';
         $this->createView = 'users.create';
         $this->editView = 'users.edit';
+        $this->sharedData = [
+            'roles' => $this->roleRepository->all(),
+        ];
         $this->showView = 'users.show';
         $this->usePagination = true;
         $this->useFilter = true;

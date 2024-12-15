@@ -16,14 +16,14 @@ class AutoCheckPermission
      */
     public function handle(Request $request, Closure $next): Response
     {
-        /*$routeName = $request->route()->getName();
+        $routeName = $request->route()->getName();
         $permission = Permission::query()->whereJsonContains("routes", $routeName)->first();
         if ($permission) {
             if ($request->user()->cannot($permission->name)) {
                 abort(403);
             }
 
-        }*/
+        }
         return $next($request);
     }
 }
