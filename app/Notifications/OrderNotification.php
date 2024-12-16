@@ -34,7 +34,8 @@ class OrderNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database',FcmChannel::class];
+        return ['database'];
+//        ,FcmChannel::class
     }
         /*public function toFcm($notifiable): FcmMessage
         {

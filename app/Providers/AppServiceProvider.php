@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\PaymentStrategies\PaymentContext;
+use App\Services\PaymentStrategies\PaypalPaymentStrategy;
+use App\Services\PaymentStrategies\StripePaymentStrategy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -15,7 +18,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(PaymentContext::class, function ($app, $params) {
+            $paymentMethod = $params[0] ?? null;
+            match ($paymentMethod) {
+                'paypal' => new PaymentContext(new PaypalPaymentStrategy()),
+                'stripe' => new PaymentContext(new StripePaymentStrategy()),
+                default => throw new \InvalidArgumentException('Invalid payment method'),
+            };
+
+        });
     }
 
     /**
