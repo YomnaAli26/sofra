@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\OrderStatusEnum;
+use App\Http\Requests\Client\StoreOrderRequest;
+use App\Services\PaymentStrategies\PaymentContext;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,24 +13,27 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 class Order extends Model
 {
     use Filterable;
+
     protected $fillable = [
         'address', 'payment_method_id', 'status',
         'notes', 'commission', 'delivery_fee',
-        'price', 'total_amount','net',
+        'price', 'total_amount', 'net',
         'client_id', 'restaurant_id'
     ];
-    protected $casts =[
-        'status'=> OrderStatusEnum::class,
+    protected $casts = [
+        'status' => OrderStatusEnum::class,
     ];
 
     protected static function boot()
     {
-        static::creating(function ($model) {
+        static::creating(function ($model){
             $model->number = static::generateOrderNumber();
-
+            $paymentMethodName =  PaymentMethod::find(request()->payment_method_id)->name;
+            dd(app(PaymentContext::class,[$paymentMethodName]));
         });
         parent::boot();
     }
+
     public static function generateOrderNumber(): string
     {
         return 'ORD-' . date('YmdHis');
@@ -42,7 +47,7 @@ class Order extends Model
     public function meals(): BelongsToMany
     {
         return $this->belongsToMany(Meal::class)
-            ->withPivot('price','quantity','special_request')
+            ->withPivot('price', 'quantity', 'special_request')
             ->withTimestamps();
     }
 

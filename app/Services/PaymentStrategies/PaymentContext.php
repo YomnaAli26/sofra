@@ -12,8 +12,8 @@ class PaymentContext
         $this->paymentStrategy = $paymentStrategy;
     }
 
-    public function executePayment($amount): bool
+    public function executePayment(float $amount, string $currency, string $returnUrl, string $cancelUrl)
     {
-        return $this->paymentStrategy->pay($amount);
+        return $this->paymentStrategy->pay($amount, $currency, $returnUrl, $cancelUrl);
     }
 }

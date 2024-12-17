@@ -2,22 +2,32 @@
 
 namespace App\Services\PaymentStrategies;
 
-use AllowDynamicProperties;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Rest\ApiContext;
 
-#[AllowDynamicProperties] class PaypalPaymentStrategy implements PaymentStrategyInterface
+use Omnipay\Omnipay;
+
+
+ class PaypalPaymentStrategy implements PaymentStrategyInterface
 {
+    public $gateway;
     public function __construct()
     {
-        $this->apiContext = new ApiContext(
-            new OAuthTokenCredential(config('paypal.client_id'), config('paypal.secret'))
-        );
-        $this->apiContext->setConfig(config('paypal.settings'));
+        $this->gateway = Omnipay::create('PayPal_Rest');
+        $this->gateway->setClientId(config('paypal.client_id'));
+        $this->gateway->setSecret(config('paypal.secret'));
+        $this->gateway->setTestMode(true);
+
     }
 
-    public function pay(float $amount): bool
+    public function pay(float $amount, string $currency, string $returnUrl, string $cancelUrl)
     {
-        // TODO: Implement pay() method.
+        dd("Dd");
+        $response = $this->gateway->purchase([
+            'amount' => $amount,
+            'currency' => $currency,
+            'returnUrl' => $returnUrl,
+            'cancelUrl' => $cancelUrl,
+        ]);
+        return $response->send();
+
     }
 }

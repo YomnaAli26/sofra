@@ -12,7 +12,8 @@
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "paypal/rest-api-sdk-php": "^1.6",
+        "league/omnipay": "^3.2",
+        "omnipay/paypal": "^3.0",
         "spatie/laravel-medialibrary": "^11.10",
         "spatie/laravel-permission": "*",
         "spatie/laravel-translatable": "^6.8"
