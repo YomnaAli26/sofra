@@ -41,8 +41,10 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
 
     }
 
-    public function success($paymentId, $payerId)
+    public function success($requestData)
     {
+        $paymentId = $requestData['paymentId'];
+        $payerId = $requestData['PayerID'];
 
         $response = $this->gateway->completePurchase([
             'transactionReference' => $paymentId,

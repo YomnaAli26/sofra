@@ -34,12 +34,7 @@ class PaymentController extends Controller
 
     public function success()
     {
-        $paymentId = request('paymentId');
-        $payerId = request('PayerID');
-        if (!$paymentId || !$payerId) {
-            return redirect()->route('payments.failure')->with('error', 'Missing payment details.');
-        }
-        dd($this->getPaymentContext()->processSuccessPayment(request('paymentId'),request('PayerID')));
+        dd($this->getPaymentContext()->processSuccessPayment(request()->all()));
     }
 
     public function failure()
