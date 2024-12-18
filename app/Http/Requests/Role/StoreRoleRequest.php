@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Role;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateCategoryRequest extends FormRequest
+class StoreRoleRequest
+
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +23,9 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name.en' => ['sometimes', 'string', 'min:3', 'max:255'],
-            'name.ar' => ['sometimes', 'string', 'min:3', 'max:255'],
+            'name' => ['required', 'string', 'max:255',Rule::unique('roles','name')],
+            'permissions' => ['sometimes', 'array'],
+            'permissions.*' => ['sometimes','string', 'exists:permissions,name'],
         ];
     }
 }

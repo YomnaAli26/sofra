@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Base\DashboardController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\{SettingRequest};
 use App\Repositories\Interfaces\SettingRepositoryInterface;
-use App\Services\OfferService;
 use Illuminate\Support\Facades\Cache;
-use App\Http\Requests\{SettingRequest, StoreCategoryRequest, UpdateCategoryRequest};
-use App\Services\CityService;
 
 
 class SettingController extends Controller

@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
+use App\Http\Requests\{Payment\StorePaymentMethodRequest, Payment\UpdatePaymentMethodRequest};
 use App\Services\PaymentMethodService;
-use App\Http\Requests\{StoreCategoryRequest,
-    StorePaymentMethodRequest,
-    UpdateCategoryRequest,
-    UpdatePaymentMethodRequest};
-use App\Services\CityService;
 
 
 class PaymentMethodController extends DashboardController

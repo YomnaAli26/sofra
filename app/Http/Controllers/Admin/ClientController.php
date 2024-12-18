@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
-
-use App\Models\Client;
+use App\Http\Requests\{Client\RegisterRequest, Client\UpdateClientRequest};
 use App\Repositories\Interfaces\AreaRepositoryInterface;
-use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Repositories\Interfaces\ClientRepositoryInterface;
 use App\Services\ClientService;
-use App\Services\RestaurantService;
-use App\Http\Requests\{Client\RegisterRequest, UpdateClientRequest};
 use Illuminate\Http\Request;
 
 

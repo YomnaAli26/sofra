@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Category;
 
-use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRoleRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,12 +19,11 @@ class UpdateRoleRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules($id): array
+    public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:255',Rule::unique('roles','name')->ignore($id)],
-            'permissions' => ['sometimes', 'array'],
-            'permissions.*' => ['sometimes','string', 'exists:permissions,name'],
+            'name.en' => ['sometimes', 'string', 'min:3', 'max:255'],
+            'name.ar' => ['sometimes', 'string', 'min:3', 'max:255'],
         ];
     }
 }

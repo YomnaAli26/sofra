@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePaymentMethodRequest extends FormRequest
+class StoreCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class StorePaymentMethodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' =>[ 'required','string','max:255'],
-            'is_active' =>[ 'required','boolean','in:0,1'],
+            'name.en' => ['required', 'string', 'min:3', 'max:255'],
+            'name.ar' => ['required', 'string', 'min:3', 'max:255'],
 
         ];
     }

@@ -3,17 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
-
-
+use App\Http\Requests\{User\StoreUserRequest, User\UpdateUserRequest};
 use App\Repositories\Interfaces\RoleRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Services\UserService;
+use Illuminate\Contracts\View\{Factory, View};
+use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\{StoreUserRequest, UpdateUserRequest};
-use Illuminate\Contracts\View\{Factory,View};
-use Illuminate\Foundation\Application;
-
 
 
 class UserController extends DashboardController

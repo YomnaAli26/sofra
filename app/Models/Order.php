@@ -9,6 +9,7 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
+use function PHPUnit\Framework\returnArgument;
 
 class Order extends Model
 {
@@ -28,8 +29,6 @@ class Order extends Model
     {
         static::creating(function ($model){
             $model->number = static::generateOrderNumber();
-            $paymentMethodName =  PaymentMethod::find(request()->payment_method_id)->name;
-            dd(app(PaymentContext::class,[$paymentMethodName]));
         });
         parent::boot();
     }

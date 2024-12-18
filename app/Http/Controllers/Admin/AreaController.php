@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
+use App\Http\Requests\{Area\StoreAreaRequest, Area\UpdateAreaRequest};
 use App\Repositories\Interfaces\CityRepositoryInterface;
-use App\Http\Requests\{StoreAreaRequest, UpdateAreaRequest};
 use App\Services\AreaService;
-
 
 
 class AreaController extends DashboardController

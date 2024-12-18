@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Payment;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreCommissionRequest extends FormRequest
+class StorePaymentMethodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +22,8 @@ class StoreCommissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'restaurant_id' => ['required', 'integer', 'exists:restaurants,id'],
-            'paid' => ['required', 'numeric'],
-            'notes' => ['nullable', 'string'],
-            'date' => ['required', 'date', 'date_format:Y-m-d'],
+            'name' =>[ 'required','string','max:255'],
+            'is_active' =>[ 'required','boolean','in:0,1'],
 
         ];
     }

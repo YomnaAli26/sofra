@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Api\Client;
 
 use App\Http\Controllers\Controller;
-
-use App\Http\Requests\StoreReviewRequest;
+use App\Http\Requests\Review\StoreReviewRequest;
 use App\Http\Resources\ReviewResource;
 use App\Services\ReviewService;
 

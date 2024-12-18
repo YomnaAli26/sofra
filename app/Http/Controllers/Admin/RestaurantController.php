@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
-
+use App\Http\Requests\{Restaurant\RegisterRequest, Restaurant\UpdateRestaurantRequest};
 use App\Repositories\Interfaces\AreaRepositoryInterface;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Services\RestaurantService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\{Restaurant\RegisterRequest, UpdateRestaurantRequest};
-
 
 
 class RestaurantController extends DashboardController

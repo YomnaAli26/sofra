@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
-use App\Http\Requests\{StoreRoleRequest, UpdateRoleRequest};
+use App\Http\Requests\{Role\StoreRoleRequest, Role\UpdateRoleRequest};
 use App\Services\RoleService;
 use Spatie\Permission\Models\Permission;
 

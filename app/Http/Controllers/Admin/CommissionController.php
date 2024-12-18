@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
-use App\Models\Restaurant;
+use App\Http\Requests\{Commission\StoreCommissionRequest, Commission\UpdateCommissionRequest};
 use App\Repositories\Interfaces\RestaurantRepositoryInterface;
 use App\Services\CommissionService;
-use App\Http\Requests\{StoreCommissionRequest, UpdateCommissionRequest};
-
 
 
 class CommissionController extends DashboardController

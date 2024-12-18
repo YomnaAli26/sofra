@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Commission;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateUserRequest extends FormRequest
+class StoreCommissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +22,11 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string', 'max:255'],
-            'email' => ['sometimes', 'string', 'email', 'max:255', Rule::unique('users','email')
-                ->ignore(request()->route('user'))],
-            'role' => ['sometimes', 'exists:roles,name'],
+           'restaurant_id' => ['required', 'integer', 'exists:restaurants,id'],
+            'paid' => ['required', 'numeric'],
+            'notes' => ['nullable', 'string'],
+            'date' => ['required', 'date', 'date_format:Y-m-d'],
+
         ];
     }
 }

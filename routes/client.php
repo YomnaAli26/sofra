@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Api\Client\{OrderController,
+    PaymentController,
     ProfileController,
     RestaurantController,
     RestaurantMealController,
@@ -38,6 +39,10 @@ Route::group(['middleware' => 'auth:client'], function () {
     });
     Route::apiResource('orders', OrderController::class)->only(['store', 'show']);
 
-
 });
 
+Route::controller(PaymentController::class)->prefix('payment')->group(function () {
+    Route::post('/{paymentMethod}', 'pay')->name('payment.pay');
+    Route::get('/success', 'success')->name('payment.success');
+    Route::get('/failure', 'failure')->name('payment.failure');
+});

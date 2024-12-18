@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Role;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateCommissionRequest extends FormRequest
+class UpdateRoleRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,13 +19,12 @@ class UpdateCommissionRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules($id): array
     {
         return [
-            'restaurant_id' => ['sometimes', 'integer', 'exists:restaurants,id'],
-            'paid' => ['sometimes', 'numeric'],
-            'notes' => ['nullable', 'string'],
-            'date' => ['sometimes', 'date', 'date_format:Y-m-d'],
+            'name' => ['sometimes', 'string', 'max:255',Rule::unique('roles','name')->ignore($id)],
+            'permissions' => ['sometimes', 'array'],
+            'permissions.*' => ['sometimes','string', 'exists:permissions,name'],
         ];
     }
 }

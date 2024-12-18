@@ -3,13 +3,12 @@ namespace App\Services\PaymentStrategies;
 
 class PaymentContext
 {
-    public function __construct(public PaymentStrategyInterface $paymentStrategy)
-    {
-    }
+    public PaymentStrategyInterface $paymentStrategy;
 
-    public function setStrategy(PaymentStrategyInterface $paymentStrategy): void
+    public function setStrategy(PaymentStrategyInterface $paymentStrategy): PaymentContext
     {
         $this->paymentStrategy = $paymentStrategy;
+        return $this;
     }
 
     public function executePayment(float $amount, string $currency, string $returnUrl, string $cancelUrl)

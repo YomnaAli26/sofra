@@ -18,16 +18,28 @@ use Omnipay\Omnipay;
 
     }
 
-    public function pay(float $amount, string $currency, string $returnUrl, string $cancelUrl)
+     /**
+      * @throws \Exception
+      */
+     public function pay(float $amount, string $currency, string $returnUrl, string $cancelUrl)
     {
-        dd("Dd");
         $response = $this->gateway->purchase([
             'amount' => $amount,
             'currency' => $currency,
             'returnUrl' => $returnUrl,
             'cancelUrl' => $cancelUrl,
         ]);
-        return $response->send();
+        $response = $response->send();
+        if ($response->isSuccessful() && $response->isRedirect()) {
+            return $response->getData()['links'][1]['href'];
+
+        }
+        else
+        {
+            throw new \Exception("Payment failed: " . $response->getMessage());
+        }
+
 
     }
+
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
-use App\Http\Requests\{StoreCategoryRequest, UpdateCategoryRequest};
+use App\Http\Requests\{Category\StoreCategoryRequest, Category\UpdateCategoryRequest};
 use App\Services\CityService;
 
 

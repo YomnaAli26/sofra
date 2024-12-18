@@ -20,12 +20,13 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(PaymentContext::class, function ($app, $params) {
             $paymentMethod = $params[0] ?? null;
-            match ($paymentMethod) {
-                'paypal' => new PaymentContext(new PaypalPaymentStrategy()),
-                'stripe' => new PaymentContext(new StripePaymentStrategy()),
+            $strategy = match ($paymentMethod) {
+                'paypal' => $app->make(PaypalPaymentStrategy::class),
+                'stripe' => $app->make(StripePaymentStrategy::class),
                 default => throw new \InvalidArgumentException('Invalid payment method'),
             };
 
+            return (new PaymentContext())->setStrategy($strategy);
         });
     }
 
@@ -47,8 +48,13 @@ class AppServiceProvider extends ServiceProvider
 
         if (request()->is('api/restaurant/*')) {
             Auth::shouldUse('restaurant');
-        } else {
+        } elseif(request()->is('api/client/*')) {
             Auth::shouldUse('client');
+
+        }
+        else
+        {
+            Auth::shouldUse('web');
 
         }
 

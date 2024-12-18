@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Commission;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreAreaRequest extends FormRequest
+class UpdateCommissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +22,10 @@ class StoreAreaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name.en' => ['required', 'string', 'min:3', 'max:255'],
-            'name.ar' => ['required', 'string', 'min:3', 'max:255'],
-            'city_id' => ['required', 'integer', 'exists:cities,id'],
+            'restaurant_id' => ['sometimes', 'integer', 'exists:restaurants,id'],
+            'paid' => ['sometimes', 'numeric'],
+            'notes' => ['nullable', 'string'],
+            'date' => ['sometimes', 'date', 'date_format:Y-m-d'],
         ];
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateClientRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,9 @@ class UpdateClientRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string', 'max:255'],
-            'email' => ['sometimes', 'string', 'email', 'max:255', Rule::unique('clients','email')
-                ->ignore(request()->route('client'))],
-            'phone' => ['sometimes', 'string', 'min:11', 'max:11', Rule::unique('clients','phone')
-                ->ignore(request()->route('client'))],
-            'area_id' => ['sometimes', 'exists:areas,id'],
+            'email' => ['sometimes', 'string', 'email', 'max:255', Rule::unique('users','email')
+                ->ignore(request()->route('user'))],
+            'role' => ['sometimes', 'exists:roles,name'],
         ];
     }
 }
