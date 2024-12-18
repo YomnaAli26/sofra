@@ -15,4 +15,9 @@ class PaymentContext
     {
         return $this->paymentStrategy->pay($amount, $currency, $returnUrl, $cancelUrl);
     }
+
+    public function processSuccessPayment($paymentId, $payerId)
+    {
+        return $this->paymentStrategy->success($paymentId, $payerId);
+    }
 }

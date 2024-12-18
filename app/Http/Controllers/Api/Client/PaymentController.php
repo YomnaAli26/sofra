@@ -11,6 +11,7 @@ use App\Services\PaymentStrategies\PaymentContext;
 class PaymentController extends Controller
 {
     protected $gateway;
+
     public function getPaymentContext()
     {
 
@@ -21,11 +22,14 @@ class PaymentController extends Controller
         }
         return $this->gateway;
     }
+
     public function pay(PaymentRequest $request, PaymentMethod $paymentMethod)
     {
         cache()->put('paymentMethod', $paymentMethod->name);
-
-        return $this->getPaymentContext()->executePayment($request->amount, $request->currency, route("payment.success"), route("payment.failure"));
+        return $this->getPaymentContext()->executePayment($request->amount,
+            $request->currency,
+            route("payment.success"),
+            route("payment.failure"));
     }
 
     public function success()
@@ -35,8 +39,7 @@ class PaymentController extends Controller
         if (!$paymentId || !$payerId) {
             return redirect()->route('payments.failure')->with('error', 'Missing payment details.');
         }
-
-        dd($this->getPaymentContext());
+        dd($this->getPaymentContext()->processSuccessPayment(request('paymentId'),request('PayerID')));
     }
 
     public function failure()
