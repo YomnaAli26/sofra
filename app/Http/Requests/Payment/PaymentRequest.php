@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Payment;
 
+use App\Models\Commission;
+use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaymentRequest extends FormRequest
@@ -27,8 +29,15 @@ class PaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' =>['required', 'numeric'],
-            'currency' =>['required',],
+            'payable_id' => ['required', 'integer', function ($attribute, $value, $fail) {
+                $existsOrders = Order::where('id', $value)->exists();
+                $existsCommission = Commission::where('id', $value)->exists();
+                if (!$existsOrders && !$existsCommission) {
+                    $fail($attribute . ' must exist in either orders or commissions.');
+                }
+            }],
+            'payable_type' => ['required', 'string', 'in:order,commission'],
+            'currency' => ['required',],
         ];
     }
 

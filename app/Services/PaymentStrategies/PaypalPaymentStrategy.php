@@ -3,6 +3,7 @@
 namespace App\Services\PaymentStrategies;
 
 
+use App\Models\PaymentTransaction;
 use Omnipay\Omnipay;
 
 
@@ -22,15 +23,33 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
     /**
      * @throws \Exception
      */
-    public function pay(float $amount, string $currency, string $returnUrl, string $cancelUrl)
+    public function pay(int $payableId, string $currency, string $returnUrl, string $cancelUrl)
     {
+        $payableType = ucfirst(request()->input('payable_type'));
+        $payableModel = 'App\\Models\\' . $payableType;
+        $payableModel = $payableModel::find($payableId);
+
+        $userableModel = auth()->user();
         $response = $this->gateway->purchase([
-            'amount' => $amount,
+            'amount' => $payableModel->total_amount,
             'currency' => $currency,
             'returnUrl' => $returnUrl,
             'cancelUrl' => $cancelUrl,
         ]);
         $response = $response->send();
+
+        PaymentTransaction::create([
+            'payable_id' => $payableModel->id,
+            'payable_type' => get_class($payableModel),
+            'userable_id' => $userableModel->id,
+            'userable_type' => get_class($userableModel),
+            'amount' => $payableModel->total_amount,
+            'currency' => $currency,
+            'payment_method' => 'paypal',
+            'payment_gateway_data' => json_encode($response->getData()),
+
+
+        ]);
         if ($response->isSuccessful() && $response->isRedirect()) {
             return response()->apiResponse(data: ['redirect_url' => $response->getData()['links'][1]['href']]);
 

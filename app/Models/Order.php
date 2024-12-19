@@ -66,4 +66,9 @@ class Order extends Model
         return $this->belongsTo(PaymentMethod::class);
     }
 
+    public function payments(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(PaymentTransaction::class, 'payable');
+    }
+
 }

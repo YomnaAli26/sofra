@@ -26,7 +26,7 @@ class PaymentController extends Controller
     public function pay(PaymentRequest $request, PaymentMethod $paymentMethod)
     {
         cache()->put('paymentMethod', $paymentMethod->name);
-        return $this->getPaymentContext()->executePayment($request->amount,
+        return $this->getPaymentContext()->executePayment($request->payable_id,
             $request->currency,
             route("payment.success"),
             route("payment.failure"));

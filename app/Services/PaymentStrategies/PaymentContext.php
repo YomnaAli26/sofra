@@ -11,9 +11,9 @@ class PaymentContext
         return $this;
     }
 
-    public function executePayment(float $amount, string $currency, string $returnUrl, string $cancelUrl)
+    public function executePayment(int $payableId , string $currency, string $returnUrl, string $cancelUrl)
     {
-        return $this->paymentStrategy->pay($amount, $currency, $returnUrl, $cancelUrl);
+        return $this->paymentStrategy->pay($payableId, $currency, $returnUrl, $cancelUrl);
     }
 
     public function processSuccessPayment($requestData)
