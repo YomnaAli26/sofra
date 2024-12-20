@@ -170,7 +170,7 @@
                 @can('update_settings')
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.settings.index') }}" class="nav-link">
+                        <a href="{{ route('admin.settings.edit') }}" class="nav-link">
                             <i class="nav-icon bi bi-gear"></i>
                             <p>Settings</p>
                         </a>

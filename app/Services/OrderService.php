@@ -40,12 +40,11 @@ class OrderService extends BaseService
             $deliveryFee = $restaurant->delivery_fee;
             $total = $orderPrice + $deliveryFee;
 
-            $orderData = Arr::except($data, 'meals');
-            $orderData['price'] = $orderPrice;
-            $orderData['commission'] = $commission;
-            $orderData['delivery_fee'] = $deliveryFee;
-            $orderData['total_amount'] = $total;
-            $orderData['net'] = $total - $commission;
+            $data['price'] = $orderPrice;
+            $data['commission'] = $commission;
+            $data['delivery_fee'] = $deliveryFee;
+            $data['total_amount'] = $total;
+            $data['net'] = $total - $commission;
 
             if ($total < $restaurant->min_order) {
                 return [
@@ -55,7 +54,7 @@ class OrderService extends BaseService
                 ];
             }
 
-            $order = $this->orderRepository->create($orderData);
+            $order = $this->orderRepository->create($data);
             $order->meals()->attach(
                 collect($data['meals'])->mapWithKeys(function ($meal) {
                     return [

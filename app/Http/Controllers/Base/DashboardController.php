@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Base;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\View\{Factory,View};
+use Illuminate\Contracts\View\{Factory, View};
 use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\{RedirectResponse, Request};
 
 
 class DashboardController extends Controller
 {
     protected $storeRequestClass;
     protected $updateRequestClass;
-    protected $baseFolder = 'admin.';
+    private const BASE_FOLDER = 'admin.';
     protected $indexView;
     protected $createView;
     protected $editView;
@@ -36,17 +35,16 @@ class DashboardController extends Controller
 
     public function index(): Factory|Application|View|string
     {
-        $data = $this->service->getData($this->relations,$this->usePagination,$this->perPage,$this->useFilter);
-        if (request()->ajax())
-        {
-            return view("{$this->baseFolder}.{$this->partialFolder}.partials.{$this->partialFolder}_table", compact('data'))->render();
+        $data = $this->service->getData($this->relations, $this->usePagination, $this->perPage, $this->useFilter);
+        if (request()->ajax()) {
+            return view(self::BASE_FOLDER . "{$this->partialFolder}.partials.{$this->partialFolder}_table", compact('data'))->render();
         }
-        return view("{$this->baseFolder}{$this->indexView}", compact('data'), array_merge($this->indexData,$this->sharedData));
+        return view(self::BASE_FOLDER . "{$this->indexView}", compact('data'), array_merge($this->indexData, $this->sharedData));
     }
 
     public function create(): View|Factory|Application
     {
-        return view("{$this->baseFolder}{$this->createView}", $this->createData, $this->sharedData);
+        return view(self::BASE_FOLDER . "{$this->createView}", $this->createData, $this->sharedData);
 
     }
 
@@ -54,36 +52,36 @@ class DashboardController extends Controller
     {
         $validatedData = $request->validate($this->storeRequestClass->rules());
         $this->service->storeResource($validatedData);
-        return to_route("{$this->baseFolder}{$this->indexView}")
+        return to_route(self::BASE_FOLDER . "{$this->indexView}")
             ->with('success', $this->successMessage);
     }
 
     public function show($id): View|Factory|Application
     {
         $model = $this->service->showResource($id);
-        return view("{$this->baseFolder}{$this->showView}", compact("model"),$this->sharedData);
+        return view(self::BASE_FOLDER . "{$this->showView}", compact("model"), $this->sharedData);
 
     }
 
     public function edit($id): View|Factory|Application
     {
         $model = $this->service->showResource($id);
-        return view("{$this->baseFolder}{$this->editView}", compact('model'), array_merge($this->editData, $this->sharedData));
+        return view(self::BASE_FOLDER . "{$this->editView}", compact('model'), array_merge($this->editData, $this->sharedData));
 
     }
 
     public function update(Request $request, $id): RedirectResponse
     {
         $validatedData = $request->validate($this->updateRequestClass->rules($id));
-        $this->service->updateResource($id,$validatedData);
-        return to_route("{$this->baseFolder}{$this->indexView}")
+        $this->service->updateResource($id, $validatedData);
+        return to_route(self::BASE_FOLDER . "{$this->indexView}")
             ->with('success', $this->successMessage);
     }
 
     public function destroy($id): RedirectResponse
     {
         $this->service->deleteResource($id);
-        return to_route("{$this->baseFolder}{$this->indexView}")
+        return to_route(self::BASE_FOLDER . "{$this->indexView}")
             ->with('success', $this->successMessage);
     }
 

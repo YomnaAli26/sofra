@@ -20,18 +20,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::query()->create([
-            'name' => 'Super Admin',
-            'email' => 'super-admin@admin.com',
-            'password' => 123456789,
-        ]);
-        $user->assignRole(AdminRoleEnum::SUPER_ADMIN->value);
+//        $user = User::query()->create([
+//            'name' => 'Super Admin',
+//            'email' => 'super-admin@admin.com',
+//            'password' => 123456789,
+//        ]);
+//        $user->assignRole(AdminRoleEnum::SUPER_ADMIN->value);
 //        City::factory(10)->create();
 //        Area::factory(10)->create();
 //        Category::factory(10)->create();
-        $this->call([
-            SettingSeeder::class,
-            RolesAndPermissionsSeeder::class,
-            ]);
+//        $this->call([
+//            SettingSeeder::class,
+//            RolesAndPermissionsSeeder::class,
+//            ]);
+        Meal::factory(5)->create();
     }
 }

@@ -25,16 +25,12 @@ class RestaurantController extends DashboardController
         $this->updateRequestClass = new UpdateRestaurantRequest();
         $this->indexView = 'restaurants.index';
         $this->createView = 'restaurants.create';
-        $this->createData = [
-            'areas' => $this->areaRepository->all(),
-            'categories' => $this->categoryRepository->all(),
-        ];
         $this->editView = 'restaurants.edit';
-        $this->editData = [
+        $this->showView = 'restaurants.show';
+        $this->sharedData = [
             'areas' => $this->areaRepository->all(),
             'categories' => $this->categoryRepository->all(),
         ];
-        $this->showView = 'restaurants.show';
         $this->usePagination = true;
         $this->useFilter = true;
         $this->partialFolder = 'restaurants';

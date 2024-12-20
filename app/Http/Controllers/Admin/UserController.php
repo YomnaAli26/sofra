@@ -4,19 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
 use App\Http\Requests\{User\StoreUserRequest, User\UpdateUserRequest};
-use App\Repositories\Interfaces\RoleRepositoryInterface;
-use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\Interfaces\{RoleRepositoryInterface, UserRepositoryInterface};
 use App\Services\UserService;
 use Illuminate\Contracts\View\{Factory, View};
 use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\{RedirectResponse, Request};
 
 
 class UserController extends DashboardController
 {
     public function __construct(
-        public UserService $userService,
+        public UserService             $userService,
         public UserRepositoryInterface $userRepository,
         public RoleRepositoryInterface $roleRepository,
 
@@ -40,19 +38,18 @@ class UserController extends DashboardController
 
     public function changePasswordForm(): View|Factory|Application
     {
-      return view('admin.users.change-password');
+        return view('admin.users.change-password');
     }
 
     public function changePassword(Request $request): RedirectResponse
     {
-        $data =$request->validate([
+        $data = $request->validate([
             'current_password' => 'required',
             'password' => 'required|min:8|confirmed',
         ]);
         $this->userService->changePassword($data);
         return to_route("admin.dashboard")->with("success", $this->successMessage);
     }
-
 
 
 }

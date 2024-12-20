@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 
 class SettingController extends Controller
 {
-    public function index()
+    public function edit()
     {
         return view('admin.settings');
     }

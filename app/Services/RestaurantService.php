@@ -27,7 +27,7 @@ class RestaurantService extends BaseService
 
     public function register($data)
     {
-        $registeredRestaurant = $this->restaurantRepository->create(Arr::except($data, ['image']));
+        $registeredRestaurant = $this->restaurantRepository->create($data);
         if (isset($data['image'])) {
             handleMediaUploads($data['image'],$registeredRestaurant);
         }

@@ -37,40 +37,40 @@ class OrderNotification extends Notification
         return ['database'];
 //        ,FcmChannel::class
     }
-        /*public function toFcm($notifiable): FcmMessage
-        {
-            $notifiable instanceof Restaurant ? $senderName = 'client' : $senderName = 'restaurant';
+    /*public function toFcm($notifiable): FcmMessage
+    {
+        $notifiable instanceof Restaurant ? $senderName = 'client' : $senderName = 'restaurant';
 
-            return (new FcmMessage(notification: new FcmNotification(
-                title: __('notifications.order_'.$this->action.'_title'),
-                body: __('notifications.order_'.$this->action.'_message',[
-                    'number' => $this->order->number,
-                    'sender_name' => $this->order->{$senderName}->name,
-                ]),
-            )))
-                ->data(['data1' => 'value', 'data2' => 'value2'])
-                ->custom([
-                    'android' => [
-                        'notification' => [
-                            'color' => '#0A0A0A',
-                            'sound' => 'default',
-                        ],
-                        'fcm_options' => [
-                            'analytics_label' => 'analytics',
+        return (new FcmMessage(notification: new FcmNotification(
+            title: __('notifications.order_'.$this->action.'_title',locale: app()->getLocale()),
+            body: __('notifications.order_'.$this->action.'_message',[
+                'number' => $this->order->number,
+                'sender_name' => $this->order->{$senderName}->name,
+            ]),
+        )))
+            ->data(['data1' => 'value', 'data2' => 'value2'])
+            ->custom([
+                'android' => [
+                    'notification' => [
+                        'color' => '#0A0A0A',
+                        'sound' => 'default',
+                    ],
+                    'fcm_options' => [
+                        'analytics_label' => 'analytics',
+                    ],
+                ],
+                'apns' => [
+                    'payload' => [
+                        'aps' => [
+                            'sound' => 'default'
                         ],
                     ],
-                    'apns' => [
-                        'payload' => [
-                            'aps' => [
-                                'sound' => 'default'
-                            ],
-                        ],
-                        'fcm_options' => [
-                            'analytics_label' => 'analytics',
-                        ],
+                    'fcm_options' => [
+                        'analytics_label' => 'analytics',
                     ],
-                ]);
-        }*/
+                ],
+            ]);
+    }*/
 
 
     /**
@@ -82,11 +82,16 @@ class OrderNotification extends Notification
     {
         $notifiable instanceof Restaurant ? $senderName = 'client' : $senderName = 'restaurant';
         return [
-            'title' => __('notifications.order_' . $this->action . '_title'),
-            'message' => __('notifications.order_' . $this->action . '_message', [
+            'title_ar' => __('notifications.order_' . $this->action . '_title', locale: 'ar'),
+            'title_en' => __('notifications.order_' . $this->action . '_title', locale: 'en'),
+            'message_ar' => __('notifications.order_' . $this->action . '_message', [
                 'number' => $this->order->number,
-               'sender_name' => $this->order->{$senderName}->name,
-            ]),
+                'sender_name' => $this->order->{$senderName}->name,
+            ], 'ar'),
+            'message_en' => __('notifications.order_' . $this->action . '_message', [
+                'number' => $this->order->number,
+                'sender_name' => $this->order->{$senderName}->name,
+            ], 'en'),
             'order_id' => $this->order->id,
             $senderName . '_id' => $this->order->{$senderName}->id,
             'created_at' => now()->toDateTimeString(),

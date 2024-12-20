@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Base\DashboardController;
-use App\Http\Requests\{StoreCityRequest, UpdateCityRequest};
+use App\Http\Requests\City\{StoreCityRequest, UpdateCityRequest};
 use App\Services\CityService;
 
 

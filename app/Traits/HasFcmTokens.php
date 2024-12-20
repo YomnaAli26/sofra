@@ -1,9 +1,6 @@
 <?php
-namespace App\Traits;
-use App\Services\FilterService;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
+namespace App\Traits;
 
 trait HasFcmTokens
 {
@@ -12,6 +9,7 @@ trait HasFcmTokens
     {
         return $this->tokens()->pluck('fcm_token')->toArray();
     }
+
     public function routeNotificationForFcm(): array
     {
         return $this->getDeviceTokens();

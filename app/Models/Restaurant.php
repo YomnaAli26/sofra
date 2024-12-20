@@ -41,7 +41,8 @@ class Restaurant extends Model implements HasMedia
             'reviews',
         ];
     protected $attributes = [
-        'status' => 0,
+        'status' => 1,
+
     ];
 
     private function getDeviceTokens()

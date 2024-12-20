@@ -17,10 +17,7 @@ class CommissionController extends DashboardController
         $this->updateRequestClass = new UpdateCommissionRequest();
         $this->indexView = 'commissions.index';
         $this->createView = 'commissions.create';
-        $this->createData =  [
-            'restaurants' => $this->restaurantRepository->all(),
-        ];
-        $this->editData =  [
+        $this->sharedData =  [
             'restaurants' => $this->restaurantRepository->all(),
         ];
         $this->editView = 'commissions.edit';

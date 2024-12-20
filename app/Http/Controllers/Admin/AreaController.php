@@ -17,11 +17,8 @@ class AreaController extends DashboardController
         $this->updateRequestClass = new UpdateAreaRequest();
         $this->indexView = 'areas.index';
         $this->createView = 'areas.create';
-        $this->createData = [
-          'cities' => app(CityRepositoryInterface::class)->all(),
-        ];
-        $this->editData = [
-          'cities' => app(CityRepositoryInterface::class)->all(),
+        $this->sharedData = [
+            'cities' => app(CityRepositoryInterface::class)->all(),
         ];
         $this->editView = 'areas.edit';
         $this->showView = 'areas.show';

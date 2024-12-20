@@ -24,16 +24,10 @@ class ClientController extends DashboardController
         $this->updateRequestClass = new UpdateClientRequest();
         $this->indexView = 'clients.index';
         $this->createView = 'clients.create';
-        $this->createData = [
+        $this->sharedData = [
             'areas' => $this->areaRepository->all(),
         ];
         $this->editView = 'clients.edit';
-        $this->editData = [
-            'areas' => $this->areaRepository->all(),
-        ];
-        $this->indexData = [
-            'areas' => $this->areaRepository->all(),
-        ];
         $this->showView = 'clients.show';
         $this->usePagination = true;
         $this->useFilter = true;

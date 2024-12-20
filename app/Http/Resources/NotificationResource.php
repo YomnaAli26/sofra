@@ -15,9 +15,14 @@ class NotificationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->id,
-            'notification'=>$this->data,
-            'is_read' => $this->when($this->read_at,true,false),
+            'id' => $this->id,
+            'notification' => [
+                'title' => $this->data["title_".app()->getLocale()],
+                'message' => $this->data["message_".app()->getLocale()],
+                'order_id' => $this->data['order_id'],
+                'created_at' => $this->data['created_at'],
+            ],
+            'is_read' => $this->when($this->read_at, true, false),
         ];
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
-class BaseService
+abstract class  BaseService
 {
     protected array $files;
 
@@ -33,8 +33,7 @@ class BaseService
 
     public function storeResource(array $data)
     {
-        $dataWithoutFiles = Arr::except($data, array_keys($this->files));
-        $modelData = $this->repository->create($dataWithoutFiles);
+        $modelData = $this->repository->create($data);
         if (!empty($this->files)) {
             handleMediaUploads($this->files, $modelData);
             return $modelData;
@@ -51,13 +50,10 @@ class BaseService
 
     public function updateResource($id, $data)
     {
-        $dataWithoutFiles = Arr::except($data, array_keys($this->files));
-
         if (!empty($this->files)) {
             $modelData = $this->repository->find($id);
-            clearMedia($modelData);
-            handleMediaUploads($this->files, $modelData);
-            $modelData->update($dataWithoutFiles);
+            handleMediaUploads($this->files, $modelData,true);
+            $modelData->update($data);
             return $modelData;
         }
         return $this->repository->update($data, $id);
