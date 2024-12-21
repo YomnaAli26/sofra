@@ -1,12 +1,12 @@
 @extends("admin.layout.master")
 
-@section("title","Cities")
+@section("title","Roles")
 
-@section("breadcrumb_header","Cities")
+@section("breadcrumb_header","Roles")
 
 @section("breadcrumb")
     @parent
-    <li class="breadcrumb-item active" aria-current="page">cities</li>
+    <li class="breadcrumb-item active" aria-current="page">roles</li>
 @endsection
 
 @section("content")
@@ -24,7 +24,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h5>City Name:</h5>
+                                    <h5>Name:</h5>
                                     <p>{{$model->name}}</p>
                                 </div>
 

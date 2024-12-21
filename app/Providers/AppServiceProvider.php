@@ -48,12 +48,10 @@ class AppServiceProvider extends ServiceProvider
 
         if (request()->is('api/restaurant/*')) {
             Auth::shouldUse('restaurant');
-        } elseif(request()->is('api/client/*')) {
+        } elseif (request()->is('api/client/*')) {
             Auth::shouldUse('client');
 
-        }
-        else
-        {
+        } else {
             Auth::shouldUse('web');
 
         }

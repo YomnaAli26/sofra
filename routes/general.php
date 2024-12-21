@@ -19,7 +19,6 @@ Route::middleware('auth:client,restaurant')->group(function () {
         Route::delete('delete-fcm-token', 'deleteFcmToken');
     });
     Route::apiResource('notifications', NotificationController::class)->only(['index', 'show']);
-
 });
 
 

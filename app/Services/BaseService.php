@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Interfaces\AreaRepositoryInterface;
+use App\Repositories\Interfaces\BaseInterface;
 use App\Repositories\Interfaces\CityRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -12,7 +13,7 @@ abstract class  BaseService
 {
     protected array $files;
 
-    public function __construct(public $repository)
+    public function __construct(public BaseInterface $repository)
     {
         $this->files = request()->allFiles();
     }

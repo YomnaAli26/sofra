@@ -23,13 +23,16 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
     /**
      * @throws \Exception
      */
-    public function pay(int $payableId, string $currency, string $returnUrl, string $cancelUrl)
+    public function pay(int $payableId,int $userableId, string $currency, string $returnUrl, string $cancelUrl)
     {
+
         $payableType = ucfirst(request()->input('payable_type'));
         $payableModel = 'App\\Models\\' . $payableType;
         $payableModel = $payableModel::find($payableId);
+        $userableType = ucfirst(request()->input('userable_type'));
+        $userableModel = 'App\\Models\\' . $userableType;
+        $userableModel = $userableModel::find($userableId);
 
-        $userableModel = auth()->user();
         $response = $this->gateway->purchase([
             'amount' => $payableModel->total_amount,
             'currency' => $currency,
@@ -37,7 +40,7 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
             'cancelUrl' => $cancelUrl,
         ]);
         $response = $response->send();
-
+dd($response->getRedirectUrl());
         PaymentTransaction::create([
             'payable_id' => $payableModel->id,
             'payable_type' => get_class($payableModel),
@@ -62,12 +65,9 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
 
     public function success($requestData)
     {
-        $paymentId = $requestData['paymentId'];
-        $payerId = $requestData['PayerID'];
-
         $response = $this->gateway->completePurchase([
-            'transactionReference' => $paymentId,
-            'payer_id' => $payerId,
+            'transactionReference' => $requestData['paymentId'],
+            'payer_id' => $requestData['PayerID'],
         ])->send();
         dd($response);
         // Check if the payment was successful

@@ -33,7 +33,7 @@ enum AdminPermissionEnum: string
             self::VIEW_CONTACTS => ['admin.contacts.index', 'admin.contacts.show'],
             self::MANAGE_RESTAURANTS => ['admin.restaurants.index', 'admin.restaurants.create', 'admin.restaurants.store', 'admin.restaurants.edit', 'admin.restaurants.update', 'admin.restaurants.delete'],
             self::MANAGE_CLIENTS => ['admin.clients.index', 'admin.clients.create', 'admin.clients.store', 'admin.clients.edit', 'admin.clients.update'],
-            self::UPDATE_SETTINGS => ['admin.settings.index', 'admin.settings.update'],
+            self::UPDATE_SETTINGS => ['admin.settings.edit', 'admin.settings.update'],
             self::VIEW_DASHBOARD => ['admin.dashboard'],
         };
     }
