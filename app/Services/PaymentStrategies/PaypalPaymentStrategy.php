@@ -40,14 +40,15 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
             'cancelUrl' => $cancelUrl,
         ]);
         $response = $response->send();
-dd($response->getRedirectUrl());
+        $data = $response->getData();
         PaymentTransaction::create([
+            'transaction_id' => $data['id'],
             'payable_id' => $payableModel->id,
             'payable_type' => get_class($payableModel),
             'userable_id' => $userableModel->id,
             'userable_type' => get_class($userableModel),
-            'amount' => $payableModel->total_amount,
-            'currency' => $currency,
+            'amount' => $data['transactions'][0]['amount']['total'],
+            'currency' => $data['transactions'][0]['amount']['currency'],
             'payment_method' => 'paypal',
             'payment_gateway_data' => json_encode($response->getData()),
 
