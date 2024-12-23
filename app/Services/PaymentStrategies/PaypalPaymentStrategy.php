@@ -34,12 +34,13 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
         $userableModel = $userableModel::find($userableId);
 
         $response = $this->gateway->purchase([
-            'amount' => $payableModel->total_amount,
+            'amount' => round($payableModel->total_amount, 2),
             'currency' => $currency,
             'returnUrl' => $returnUrl,
             'cancelUrl' => $cancelUrl,
         ]);
         $response = $response->send();
+        if ($response->isSuccessful() && $response->isRedirect()) {
         $data = $response->getData();
         PaymentTransaction::create([
             'transaction_id' => $data['id'],
@@ -54,7 +55,7 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
 
 
         ]);
-        if ($response->isSuccessful() && $response->isRedirect()) {
+
             return response()->apiResponse(data: ['redirect_url' => $response->getData()['links'][1]['href']]);
 
         } else {
@@ -69,6 +70,7 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
         $response = $this->gateway->completePurchase([
             'transactionReference' => $requestData['paymentId'],
             'payer_id' => $requestData['PayerID'],
+
         ])->send();
         dd($response);
         // Check if the payment was successful

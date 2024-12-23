@@ -23,7 +23,7 @@ class Client extends Model
     ];
     protected $fillable = [
         'email', 'phone', 'password',
-        'name', 'area_id','is_active'
+        'name', 'area_id','is_active','lang'
     ];
 
     private function getDeviceTokens()

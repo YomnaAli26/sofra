@@ -31,7 +31,7 @@ class Restaurant extends Model implements HasMedia
         'name', 'email', 'phone', 'password',
         'area_id', 'category_id', 'min_order',
         'delivery_fee', 'status', 'avg_rate',
-        'contact_phone', 'whatsapp_number'
+        'contact_phone', 'whatsapp_number','lang'
     ];
     public array $filterRelations =
         [

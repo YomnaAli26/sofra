@@ -1,31 +1,26 @@
 <!DOCTYPE html>
-<html lang="{{config("app.locale")}}" dir="{{ app()->getLocale() == 'en' ? 'ltr' :'rtl' }}"> <!--begin::Head-->
-
+<html lang="{{ session('lang','en') }}" dir="{{ session('lang','en') == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>@yield("title")</title><!--begin::Primary Meta Tags-->
+    <title>@yield("title")</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="AdminLTE 4 | General UI Elements">
-    <meta name="author" content="ColorlibHQ">
-    <meta name="description"
-
-          content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS.">
-    <meta name="keywords"
-          content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard">
-    <!--end::Primary Meta Tags--><!--begin::Fonts-->
     @include("admin.layout.partials.links")
-</head> <!--end::Head--> <!--begin::Body-->
 
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
-<div class="app-wrapper"> <!--begin::Header-->
+    <!-- Include RTL or LTR CSS based on locale -->
+    @if(session('lang','en') == 'ar')
+        <link rel="stylesheet" href="{{ asset('admin/css/adminlte.rtl.css') }}">
+    @else
+        <link rel="stylesheet" href="{{ asset('admin/css/adminlte.ltr.css') }}"> <!-- Use LTR CSS if language is English -->
+    @endif
+</head>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<div class="app-wrapper">
     @include("admin.layout.partials.navbar")
-
     @include("admin.layout.partials.sidebar")
 
-    <!--begin::App Main-->
-    <main class="app-main"> <!--begin::App Content Header-->
-        <div class="app-content-header"> <!--begin::Container-->
-            <div class="container-fluid"> <!--begin::Row-->
+    <main class="app-main">
+        <div class="app-content-header">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-6">
                         <h3 class="mb-0">@yield("breadcrumb_header")</h3>
@@ -37,15 +32,15 @@
                             @show
                         </ol>
                     </div>
-                </div> <!--end::Row-->
-            </div> <!--end::Container-->
-        </div> <!--end::App Content Header-->
+                </div>
+            </div>
+        </div>
         @yield("content")
     </main>
-    <!--end::App Main-->
-    @include("admin.layout.partials.footer")
-</div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
-@include("admin.layout.partials.scripts")
-</body><!--end::Body-->
 
+    @include("admin.layout.partials.footer")
+</div>
+
+@include("admin.layout.partials.scripts")
+</body>
 </html>

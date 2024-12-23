@@ -37,16 +37,17 @@ class OrderNotification extends Notification
         return ['database'];
 //        ,FcmChannel::class
     }
-    /*public function toFcm($notifiable): FcmMessage
+
+/*    public function toFcm($notifiable): FcmMessage
     {
         $notifiable instanceof Restaurant ? $senderName = 'client' : $senderName = 'restaurant';
 
         return (new FcmMessage(notification: new FcmNotification(
-            title: __('notifications.order_'.$this->action.'_title',locale: app()->getLocale()),
-            body: __('notifications.order_'.$this->action.'_message',[
+            title: __('notifications.order_' . $this->action . '_title', locale: $notifiable->lang),
+            body: __('notifications.order_' . $this->action . '_message', [
                 'number' => $this->order->number,
                 'sender_name' => $this->order->{$senderName}->name,
-            ]),
+            ], $notifiable->lang),
         )))
             ->data(['data1' => 'value', 'data2' => 'value2'])
             ->custom([
@@ -81,20 +82,19 @@ class OrderNotification extends Notification
     public function toArray(object $notifiable): array
     {
         $notifiable instanceof Restaurant ? $senderName = 'client' : $senderName = 'restaurant';
-        return [
-            'title_ar' => __('notifications.order_' . $this->action . '_title', locale: 'ar'),
-            'title_en' => __('notifications.order_' . $this->action . '_title', locale: 'en'),
-            'message_ar' => __('notifications.order_' . $this->action . '_message', [
-                'number' => $this->order->number,
-                'sender_name' => $this->order->{$senderName}->name,
-            ], 'ar'),
-            'message_en' => __('notifications.order_' . $this->action . '_message', [
-                'number' => $this->order->number,
-                'sender_name' => $this->order->{$senderName}->name,
-            ], 'en'),
+        $translatedData = collect(config('app.locales'))->mapWithKeys(function ($locale) use ($senderName) {
+            return [
+                "title_{$locale}" => __('notifications.order_' . $this->action . '_title', locale: $locale),
+                "message_{$locale}" => __('notifications.order_' . $this->action . '_message', [
+                    'number' => $this->order->number,
+                    'sender_name' => $this->order->{$senderName}->name,
+                ], $locale),
+            ];
+        })->toArray();
+        return array_merge($translatedData, [
             'order_id' => $this->order->id,
             $senderName . '_id' => $this->order->{$senderName}->id,
             'created_at' => now()->toDateTimeString(),
-        ];
+        ]);
     }
 }

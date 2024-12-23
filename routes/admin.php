@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auto-check-permission', 'auth:web']], function (
     Route::resource('/clients', 'ClientController');
 
 
-    Route::get('toggle-locals/{localeValue}', 'LocalizationController')->name("locals.toggle");
+    Route::get('toggle-locals/{lang}', 'LocalizationController')->name("locals.toggle");
     Route::get('settings', 'SettingController@edit')->name("settings.edit");
     Route::put('settings', 'SettingController@update')->name("settings.update");
 
