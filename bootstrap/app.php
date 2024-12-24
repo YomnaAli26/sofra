@@ -33,6 +33,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(append: [
             LangMiddleware::class,
         ]);
+        $middleware->web(append: [
+            LangMiddleware::class,
+        ]);
         $middleware->alias([
             'lang' => LangMiddleware::class,
             'auto-check-permission' => AutoCheckPermission::class,

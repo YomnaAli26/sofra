@@ -14,10 +14,7 @@ class LocalizationController extends Controller
     public function __invoke(Request $request)
     {
         $locale = $request->route('lang','en');
-        App::setLocale($locale);
         session()->put('lang', $locale);
-
-//        dd($locale,\app()->getLocale(),session()->get('lang'));
         return to_route("admin.dashboard");
     }
 }

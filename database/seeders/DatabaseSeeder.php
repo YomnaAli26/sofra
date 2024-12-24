@@ -29,10 +29,10 @@ class DatabaseSeeder extends Seeder
 //        City::factory(10)->create();
 //        Area::factory(10)->create();
 //        Category::factory(10)->create();
-//        $this->call([
-//            SettingSeeder::class,
+        $this->call([
+            SettingSeeder::class,
 //            RolesAndPermissionsSeeder::class,
-//            ]);
-        Meal::factory(5)->create();
+            ]);
+//        Meal::factory(5)->create();
     }
 }

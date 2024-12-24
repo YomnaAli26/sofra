@@ -16,6 +16,9 @@ class LangMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (session()->isStarted() && session()->has('lang')) {
+            App::setLocale(session('lang','en'));
+        }
         $request->headers->set('Accept', 'application/json');
         $lang = $request->header('Accept-Language');
         if (isset($lang) && strlen($lang) == 2)

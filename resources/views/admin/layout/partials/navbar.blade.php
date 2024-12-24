@@ -6,7 +6,7 @@
             <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Contact</a> </li>
         </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
         <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
-            <li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="{{ route("admin.locals.toggle",session('lang') == 'en'? 'ar':'en') }}"
+            <li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="{{ route("admin.locals.toggle",session('lang',config('app.locale')) == 'en'? 'ar':'en') }}"
                                      role="button">  {{ ucfirst(session('lang') == 'en' ? 'ar' : 'en') }} </a></li>
             <!--end::Navbar Search--> <!--begin::Messages Dropdown Menu-->
             <li class="nav-item dropdown"><a class="nav-link" data-bs-toggle="dropdown" href="#"> <i

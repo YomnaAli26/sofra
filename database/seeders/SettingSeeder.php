@@ -35,7 +35,7 @@ class SettingSeeder extends Seeder
             ],
         ];
 
-        Setting::insert($settings);
+        Setting::query()->upsert($settings, ['key'],['value']);
 
     }
 }
