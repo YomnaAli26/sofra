@@ -34,6 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'hyperpay' => [
+        'entity_id' => env('HYPERPAY_ENTITY_ID'),
+        'access_token' => env('HYPERPAY_ACCESS_TOKEN'),
+        'sandbox' => env('HYPERPAY_SANDBOX', true),
+    ],
 
 ];

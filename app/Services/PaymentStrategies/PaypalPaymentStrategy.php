@@ -38,6 +38,7 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
             'currency' => $currency,
             'returnUrl' => $returnUrl,
             'cancelUrl' => $cancelUrl,
+            'paymentMethod' => 'paypal',
         ]);
         $response = $response->send();
         if ($response->isSuccessful() && $response->isRedirect()) {
@@ -68,14 +69,10 @@ class PaypalPaymentStrategy implements PaymentStrategyInterface
     public function success($requestData)
     {
         $response = $this->gateway->completePurchase([
-            'transactionReference' => $requestData['paymentId'],
             'payer_id' => $requestData['PayerID'],
-
+            'transactionReference' => $requestData['paymentId'],
         ])->send();
-        dd($response);
-        // Check if the payment was successful
         if ($response->isSuccessful()) {
-            // Payment successful, handle accordingly
             $transactionData = $response->getData();
             return response()->json([
                 'success' => true,
